@@ -12,22 +12,31 @@ export default function add({}: Props) {
       <Row>
         <Col>
           <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+            <Form.Group className="mb-3">
+              <Form.Label>Nazwa</Form.Label>
+              <Form.Control type="text" placeholder="wprowadź nazwę" />
               <Form.Text className="text-muted">
-                We ll never share your email with anyone else.
+                Fajną nazwę daj, taką unikalną.
               </Form.Text>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+            <Form.Group className="mb-3">
+              <Form.Label>Rodzaj szablonu</Form.Label>
+              <Form.Check type="radio" name="templateType" label="Plik SVG" />
+              <Form.Check
+                type="radio"
+                name="templateType"
+                label="Tekst Markdown"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Control as="textarea" placeholder="Treść szablonu" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Label>Plik SVG</Form.Label>
+              <Form.Control type="file" />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              Dodaj
             </Button>
           </Form>
         </Col>
