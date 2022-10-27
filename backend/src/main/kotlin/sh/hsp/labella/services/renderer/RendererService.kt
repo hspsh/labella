@@ -12,8 +12,8 @@ data class PrinterConfiguration(
 );
 
 sealed class RenderingInput {
-    data class SVGRenderingInput(val SVGContents: String);
-    data class MdRenderingInput(val MdContents: String);
+    data class SVGRenderingInput(val SVGContents: String): RenderingInput();
+    data class MdRenderingInput(val MdContents: String): RenderingInput();
 }
 
 data class RenderingOutput(val image: BufferedImage, val printDimensions: PrintDimensions)
