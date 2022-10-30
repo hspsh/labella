@@ -32,7 +32,6 @@ class Template {
         updated = Date()
         created = Date()
     }
-
     @PreUpdate
     fun onUpdate() {
         updated = Date()
