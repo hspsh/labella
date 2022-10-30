@@ -11,7 +11,7 @@ export default function add({}: Props) {
     <Container>
       <Row>
         <Col>
-          <TemplateForm submitText="Dodaj" />
+          <TemplateForm submitText="Aktualizuj" />
         </Col>
       </Row>
     </Container>
