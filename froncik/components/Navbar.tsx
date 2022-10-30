@@ -6,7 +6,7 @@ import NavbarBs from "react-bootstrap/Navbar";
 
 export default function Navbar() {
   return (
-    <Row>
+    <Row className="mb-2" >
       <Col>
         <NavbarBs bg="light" expand="lg">
           <Container>

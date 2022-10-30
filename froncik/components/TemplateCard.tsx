@@ -1,6 +1,4 @@
-import Card from "react-bootstrap/Card";
-import Stack from "react-bootstrap/Stack";
-import Button from "react-bootstrap/Button";
+import { Card, Stack, Button, ButtonGroup } from "react-bootstrap";
 
 type Props = {};
 
@@ -10,7 +8,7 @@ export default function TemplateCard({}: Props) {
       border="primary"
       key="Primary"
       text="dark"
-      style={{ width: "18rem" }}
+      style={{ minWidth: "18rem" }}
       className="mb-2"
     >
       <Card.Header>Nazwa szablonu</Card.Header>
@@ -19,10 +17,12 @@ export default function TemplateCard({}: Props) {
           src="https://via.placeholder.com/150x90?text=elo%20mordzie"
           alt="Card image"
         />
-        <Stack style={{ justifyContent: "space-between" }}>
-          <Button>Usuń</Button>
-          <Button>Edytuj</Button>
-          <Button>Dodaj</Button>
+        <Stack>
+          <ButtonGroup vertical style={{ height: "100%" }}>
+            <Button>Usuń</Button>
+            <Button>Edytuj</Button>
+            <Button>Dodaj</Button>
+          </ButtonGroup>
         </Stack>
       </Stack>
     </Card>
