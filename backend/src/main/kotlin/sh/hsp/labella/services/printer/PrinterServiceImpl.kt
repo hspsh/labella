@@ -12,7 +12,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet
 
 class PrinterServiceImpl : PrinterService {
     override fun print(image: BufferedImage) {
-        val printService = PrintServiceLookup.lookupPrintServices(null, null)[0]
+        val printService = PrintServiceLookup.lookupPrintServices(null, null)[3]
         val printJob = printService.createPrintJob()
 
         val printAttributes = HashPrintRequestAttributeSet()
@@ -21,10 +21,10 @@ class PrinterServiceImpl : PrinterService {
 
 
         val os = ByteArrayOutputStream()
-        ImageIO.write(image, "jpeg", os)
+        ImageIO.write(image, "png", os)
         val inputStream = ByteArrayInputStream(os.toByteArray())
 
-        val doc = SimpleDoc(inputStream, DocFlavor.INPUT_STREAM("image/png"), docAttributes);
+        val doc = SimpleDoc(inputStream, DocFlavor.INPUT_STREAM.PNG, docAttributes);
 
         printJob.print(doc, printAttributes)
     }
