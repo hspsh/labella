@@ -1,10 +1,19 @@
 import TemplateForm from "../../components/TemplateForm";
 import FormWithPreview from "../../components/FormWithPreview";
 
+import API from "../../lib/api";
+
 type Props = {};
 
-export default function add({}: Props) {
-  const form = <TemplateForm submitText="Dodaj" />;
+export default function Add({}: Props) {
+  const form = (
+    <TemplateForm
+      submitText="Dodaj"
+      submitCallback={(template) => {
+        API.templates.create(template.name, template.template);
+      }}
+    />
+  );
 
   return <FormWithPreview form={form} />;
 }

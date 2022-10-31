@@ -2,13 +2,14 @@ import Link from "next/link";
 import { Card, Stack, Button, ButtonGroup } from "react-bootstrap";
 
 import routes from "../lib/routes";
-import Template from "../common/Template"
+import Template from "../common/Template";
+import API from "../lib/api";
 
 type Props = {
-  template: Template
+  template: Template;
 };
 
-export default function TemplateCard({template}: Props) {
+export default function TemplateCard({ template }: Props) {
   const buttonStyle = {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -25,7 +26,9 @@ export default function TemplateCard({template}: Props) {
       <Card.Header>{template.name}</Card.Header>
       <Stack direction="horizontal">
         <Card.Img
-          src={`https://via.placeholder.com/150x90?text=${encodeURI(template.template)}`}
+          src={`https://via.placeholder.com/150x90?text=${encodeURI(
+            template.template
+          )}`}
           alt="Card image"
           style={{ "--bs-card-inner-border-radius": 0 } as React.CSSProperties}
         />
@@ -35,7 +38,12 @@ export default function TemplateCard({template}: Props) {
             style={{ height: "100%" }}
             className="side-btns"
           >
-            <Button style={buttonStyle}>Usuń</Button>
+            <Button
+              style={buttonStyle}
+              onClick={() => API.templates.delete(template.id)}
+            >
+              Usuń
+            </Button>
             <Link href={routes.edit(template.id)} passHref legacyBehavior>
               <Button style={buttonStyle}>Edytuj</Button>
             </Link>

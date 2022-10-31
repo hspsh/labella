@@ -12,6 +12,9 @@ const API = {
     create(name: string, content: string): Promise<Template> {
       return fetch(`${API_PATH}/templates`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           name,
           template: content,
@@ -26,6 +29,9 @@ const API = {
     update(id: number, name: string, content: string): Promise<Template> {
       return fetch(`${API_PATH}/templates/${id}`, {
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           name,
           template: content,
