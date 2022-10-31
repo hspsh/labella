@@ -2,10 +2,13 @@ import Link from "next/link";
 import { Card, Stack, Button, ButtonGroup } from "react-bootstrap";
 
 import routes from "../lib/routes";
+import Template from "../common/Template"
 
-type Props = {};
+type Props = {
+  template: Template
+};
 
-export default function TemplateCard({}: Props) {
+export default function TemplateCard({template}: Props) {
   const buttonStyle = {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -19,10 +22,10 @@ export default function TemplateCard({}: Props) {
       style={{ minWidth: "18rem" }}
       className="mb-2"
     >
-      <Card.Header>Nazwa szablonu</Card.Header>
+      <Card.Header>{template.name}</Card.Header>
       <Stack direction="horizontal">
         <Card.Img
-          src="https://via.placeholder.com/150x90?text=elo%20mordzie"
+          src={`https://via.placeholder.com/150x90?text=${encodeURI(template.template)}`}
           alt="Card image"
           style={{ "--bs-card-inner-border-radius": 0 } as React.CSSProperties}
         />
@@ -33,10 +36,10 @@ export default function TemplateCard({}: Props) {
             className="side-btns"
           >
             <Button style={buttonStyle}>Usuń</Button>
-            <Link href={routes.edit(1)} passHref legacyBehavior>
+            <Link href={routes.edit(template.id)} passHref legacyBehavior>
               <Button style={buttonStyle}>Edytuj</Button>
             </Link>
-            <Link href={routes.print(1)} passHref legacyBehavior>
+            <Link href={routes.print(template.id)} passHref legacyBehavior>
               <Button style={buttonStyle}>Drukuj</Button>
             </Link>
           </ButtonGroup>
