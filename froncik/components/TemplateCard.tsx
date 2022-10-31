@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { Card, Stack, Button, ButtonGroup } from "react-bootstrap";
+
+import routes from "../lib/routes";
 
 type Props = {};
 
@@ -20,8 +23,8 @@ export default function TemplateCard({}: Props) {
         <Stack>
           <ButtonGroup vertical style={{ height: "100%" }}>
             <Button>Usuń</Button>
-            <Button>Edytuj</Button>
-            <Button>Dodaj</Button>
+            <Link href={routes.edit(1)} passHref legacyBehavior><Button>Edytuj</Button></Link>
+            <Link href={routes.print(1)} passHref legacyBehavior><Button>Drukuj</Button></Link>
           </ButtonGroup>
         </Stack>
       </Stack>

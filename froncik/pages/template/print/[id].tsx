@@ -1,5 +1,5 @@
-import TemplatePrintForm from "../../components/TemplatePrintForm";
-import FormWithPreview from "../../components/FormWithPreview";
+import TemplatePrintForm from "../../../components/TemplatePrintForm";
+import FormWithPreview from "../../../components/FormWithPreview";
 
 type Props = {};
 
