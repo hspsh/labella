@@ -6,6 +6,11 @@ import routes from "../lib/routes";
 type Props = {};
 
 export default function TemplateCard({}: Props) {
+  const buttonStyle = {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  };
+
   return (
     <Card
       border="primary"
@@ -19,12 +24,21 @@ export default function TemplateCard({}: Props) {
         <Card.Img
           src="https://via.placeholder.com/150x90?text=elo%20mordzie"
           alt="Card image"
+          style={{ "--bs-card-inner-border-radius": 0 } as React.CSSProperties}
         />
         <Stack>
-          <ButtonGroup vertical style={{ height: "100%" }}>
-            <Button>Usuń</Button>
-            <Link href={routes.edit(1)} passHref legacyBehavior><Button>Edytuj</Button></Link>
-            <Link href={routes.print(1)} passHref legacyBehavior><Button>Drukuj</Button></Link>
+          <ButtonGroup
+            vertical
+            style={{ height: "100%" }}
+            className="side-btns"
+          >
+            <Button style={buttonStyle}>Usuń</Button>
+            <Link href={routes.edit(1)} passHref legacyBehavior>
+              <Button style={buttonStyle}>Edytuj</Button>
+            </Link>
+            <Link href={routes.print(1)} passHref legacyBehavior>
+              <Button style={buttonStyle}>Drukuj</Button>
+            </Link>
           </ButtonGroup>
         </Stack>
       </Stack>
