@@ -9,13 +9,16 @@ import javax.print.PrintServiceLookup
 import javax.print.SimpleDoc
 import javax.print.attribute.HashDocAttributeSet
 import javax.print.attribute.HashPrintRequestAttributeSet
+import javax.print.attribute.standard.Copies
 
 class PrinterServiceImpl : PrinterService {
     override fun print(image: BufferedImage) {
-        val printService = PrintServiceLookup.lookupPrintServices(null, null)[3]
+        val printServices = PrintServiceLookup.lookupPrintServices(null, null)
+        val printService = printServices[2]
         val printJob = printService.createPrintJob()
 
         val printAttributes = HashPrintRequestAttributeSet()
+        printAttributes.add(Copies(2))
 
         val docAttributes = HashDocAttributeSet()
 
