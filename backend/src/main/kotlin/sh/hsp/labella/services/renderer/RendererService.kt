@@ -8,13 +8,13 @@ interface RendererService {
 
 
 data class PrinterConfiguration(
-        val dpi: Int
+    val dpi: Int
 );
 
 sealed class RenderingInput {
-    data class SVGRenderingInput(val SVGContents: String): RenderingInput();
-    data class MdRenderingInput(val MdContents: String): RenderingInput();
+    data class SVGRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
+    data class MdRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
 }
 
-data class RenderingOutput(val image: BufferedImage, val printDimensions: PrintDimensions)
-data class PrintDimensions(val xInMillimeters: Double, val yInMillimeters: Double)
+data class RenderingOutput(val image: BufferedImage)
+data class PrintDimensions(val xInPixels: Int, val yInPixel: Int)
