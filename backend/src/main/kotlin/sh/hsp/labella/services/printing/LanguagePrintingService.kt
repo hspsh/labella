@@ -2,6 +2,7 @@ package sh.hsp.labella.services.printing
 
 import sh.hsp.labella.services.printer.PrinterService
 import sh.hsp.labella.services.printing.converter.ImageToLanguage
+import sh.hsp.labella.services.renderer.PrintDimensions
 import sh.hsp.labella.services.renderer.RendererService
 import sh.hsp.labella.services.renderer.RenderingInput
 import sh.hsp.labella.services.template.TemplateService
@@ -15,11 +16,25 @@ class LanguagePrintingService(
     private val printerService: PrinterService
 ) : PrintingService {
     override fun printMd(contents: String, fields: Map<String, String>) {
-        print(contents, fields) { template -> rendererService.render(RenderingInput.MdRenderingInput(template)).image }
+        print(contents, fields) { template ->
+            rendererService.render(
+                RenderingInput.MdRenderingInput(
+                    template,
+                    PrintDimensions(400, 240)
+                )
+            ).image
+        }
     }
 
     override fun printSvg(contents: String, fields: Map<String, String>) {
-        print(contents, fields) { template -> rendererService.render(RenderingInput.SVGRenderingInput(template)).image }
+        print(contents, fields) { template ->
+            rendererService.render(
+                RenderingInput.SVGRenderingInput(
+                    template,
+                    PrintDimensions(400, 240)
+                )
+            ).image
+        }
     }
 
     private fun print(contents: String, fields: Map<String, String>, renderStrategy: Function<String, BufferedImage>) {
