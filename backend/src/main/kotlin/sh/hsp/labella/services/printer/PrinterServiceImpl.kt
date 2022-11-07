@@ -1,25 +1,30 @@
 package sh.hsp.labella.services.printer
 
-import java.awt.image.BufferedImage
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import javax.imageio.ImageIO
 import javax.print.DocFlavor
+import javax.print.PrintService
 import javax.print.PrintServiceLookup
 import javax.print.SimpleDoc
+import javax.print.attribute.HashAttributeSet
 import javax.print.attribute.HashDocAttributeSet
 import javax.print.attribute.HashPrintRequestAttributeSet
-import javax.print.attribute.standard.Copies
+import javax.print.attribute.standard.PrinterName
 
 class PrinterServiceImpl : PrinterService {
+    lateinit var printService: PrintService
+
+    constructor(printerName: String) {
+        val attributes = HashAttributeSet()
+        attributes.add(PrinterName(printerName, null))
+
+        printService =
+            PrintServiceLookup.lookupPrintServices(null, attributes).firstOrNull()
+                ?: throw RuntimeException("Printer of name '$printerName' not found")
+    }
+
     override fun print(image: ByteArray) {
-        val printServices = PrintServiceLookup.lookupPrintServices(null, null)
-        val printService = printServices[2]
         val printJob = printService.createPrintJob()
 
         val printAttributes = HashPrintRequestAttributeSet()
-        printAttributes.add(Copies(2))
-
         val docAttributes = HashDocAttributeSet()
 
         val doc = SimpleDoc(image, DocFlavor.BYTE_ARRAY.AUTOSENSE, docAttributes);
