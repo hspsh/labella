@@ -1,7 +1,7 @@
-package sh.hsp.labella.services.printing.converter
+package sh.hsp.labella.services.printer.converter
 
-import sh.hsp.labella.services.printing.converter.mono.ImageToMono
-import sh.hsp.labella.services.printing.converter.zebra.MonoToLanguage
+import sh.hsp.labella.services.printer.converter.mono.ImageToMono
+import sh.hsp.labella.services.printer.converter.zebra.MonoToLanguage
 import java.awt.image.BufferedImage
 
 class ImageToLanguageImpl(val imageToMono: ImageToMono, val monoToLanguage: MonoToLanguage) : ImageToLanguage {

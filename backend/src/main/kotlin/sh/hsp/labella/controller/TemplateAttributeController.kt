@@ -1,26 +1,20 @@
 package sh.hsp.labella.controller
 
-import org.springframework.data.rest.webmvc.ResourceNotFoundException
-import org.springframework.web.bind.annotation.*
-import sh.hsp.labella.services.template.TemplateService
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import sh.hsp.labella.services.templating.TemplatingServiceImpl
 
 @RestController
 @RequestMapping(path = ["/templates/{templateId}/attributes"])
 class TemplateAttributeController(
-    val templateService: TemplateService,
-    val templateRepository: TemplateRepository
+    val templatingServiceImpl: TemplatingServiceImpl
 ) {
-    
+
     @GetMapping
     fun attributes(@PathVariable templateId: Long): AttributesDTO {
-        val maybeTemplate = templateRepository.findById(templateId)
-        if (maybeTemplate.isEmpty) {
-            throw ResourceNotFoundException()
-        }
-
-        val template = maybeTemplate.get()
-
-        return AttributesDTO(templateService.listFields(template.template))
+        return AttributesDTO(templatingServiceImpl.fields(templateId))
     }
 }
 

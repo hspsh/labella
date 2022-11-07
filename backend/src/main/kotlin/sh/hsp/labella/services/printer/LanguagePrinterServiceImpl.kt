@@ -9,7 +9,7 @@ import javax.print.attribute.HashDocAttributeSet
 import javax.print.attribute.HashPrintRequestAttributeSet
 import javax.print.attribute.standard.PrinterName
 
-class PrinterServiceImpl : PrinterService {
+class LanguagePrinterServiceImpl : LanguagePrinterService {
     lateinit var printService: PrintService
 
     constructor(printerName: String) {

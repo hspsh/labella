@@ -1,6 +1,7 @@
 package sh.hsp.labella.services.renderer
 
 import org.junit.jupiter.api.Test
+import sh.hsp.labella.model.PrintDimensions
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 

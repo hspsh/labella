@@ -1,4 +1,4 @@
-package sh.hsp.labella.services.printing.converter
+package sh.hsp.labella.services.printer.converter
 
 import java.awt.image.BufferedImage
 

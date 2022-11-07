@@ -2,8 +2,8 @@ package sh.hsp.labella.services.printing
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import sh.hsp.labella.services.printing.converter.mono.SimpleImageToMono
-import sh.hsp.labella.services.printing.converter.zebra.MonoToEpl
+import sh.hsp.labella.services.printer.converter.mono.SimpleImageToMono
+import sh.hsp.labella.services.printer.converter.zebra.MonoToEpl
 import javax.imageio.ImageIO
 
 class PngConversionToEplTest {

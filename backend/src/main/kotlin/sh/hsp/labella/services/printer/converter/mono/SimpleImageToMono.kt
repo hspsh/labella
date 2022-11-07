@@ -1,4 +1,4 @@
-package sh.hsp.labella.services.printing.converter.mono
+package sh.hsp.labella.services.printer.converter.mono
 
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage

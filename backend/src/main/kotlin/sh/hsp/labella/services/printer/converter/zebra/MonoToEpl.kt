@@ -1,6 +1,6 @@
-package sh.hsp.labella.services.printing.converter.zebra
+package sh.hsp.labella.services.printer.converter.zebra
 
-import sh.hsp.labella.services.printing.converter.mono.Mono
+import sh.hsp.labella.services.printer.converter.mono.Mono
 import java.nio.charset.Charset
 
 class MonoToEpl : MonoToLanguage {

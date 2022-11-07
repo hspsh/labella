@@ -1,6 +1,8 @@
 package sh.hsp.labella.services.printing
 
+import sh.hsp.labella.model.RenderingOutput
+
 interface PrintingService {
-    fun printMd(contents: String, fields: Map<String, String>)
-    fun printSvg(contents: String, fields: Map<String, String>)
+    fun print(templateId: Long, fields: Map<String, String>)
+    fun preview(templateId: Long, fields: Map<String, String>): RenderingOutput
 }

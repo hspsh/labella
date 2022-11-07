@@ -1,7 +1,11 @@
 package sh.hsp.labella.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.Date
+import java.awt.image.BufferedImage
+import java.util.*
+import java.util.function.BiFunction
+import java.util.function.Consumer
+import java.util.function.Function
 import javax.persistence.*
 
 @Entity
@@ -40,8 +44,50 @@ class Template {
     fun onUpdate() {
         updated = Date()
     }
+
+    fun render(
+        fields: Map<String, String>?,
+        templateService: BiFunction<String, Map<String, String>, String>,
+        svgSizeExtractor: Function<String, PrintDimensions?>,
+        renderer: Function<RenderingInput, RenderingOutput>
+    ): RenderingOutput {
+        if (type != TemplateType.SVG) {
+            throw UnsupportedOperationException()
+        }
+
+        val templated = templateService.apply(template, fields ?: emptyMap())
+
+        val printDimensions = svgSizeExtractor.apply(templated) ?: PrintDimensions.ORANGE_LABEL
+
+        return renderer.apply(RenderingInput.SVGRenderingInput(template, printDimensions))
+    }
+
+    fun fields(fieldExtractor: Function<String, List<String>>): List<String> =
+        fieldExtractor.apply(template)
+
+
+    enum class TemplateType {
+        SVG, MD
+    }
 }
 
-enum class TemplateType {
-    SVG, MD
+data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
+    companion object {
+        val ORANGE_LABEL = PrintDimensions(400, 240)
+    }
+}
+
+data class RenderingOutput(val image: BufferedImage) {
+    fun printViaLanguage(
+        imageToLanguageConverter: Function<BufferedImage, ByteArray>,
+        languagePrinter: Consumer<ByteArray>
+    ) {
+        val language = imageToLanguageConverter.apply(image)
+        languagePrinter.accept(language)
+    }
+}
+
+sealed class RenderingInput {
+    data class SVGRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
+    data class MdRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
 }
