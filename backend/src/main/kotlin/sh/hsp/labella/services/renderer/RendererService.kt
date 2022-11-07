@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage
 
 interface RendererService {
     fun render(renderingInput: RenderingInput): RenderingOutput
+
+
 }
 
 
@@ -17,4 +19,8 @@ sealed class RenderingInput {
 }
 
 data class RenderingOutput(val image: BufferedImage)
-data class PrintDimensions(val xInPixels: Int, val yInPixel: Int)
+data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
+    companion object {
+        val ORANGE_LABEL = PrintDimensions(400, 240)
+    }
+}

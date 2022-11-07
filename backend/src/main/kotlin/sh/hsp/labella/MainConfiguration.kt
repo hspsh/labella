@@ -9,6 +9,7 @@ import sh.hsp.labella.services.printing.PrintingService
 import sh.hsp.labella.services.printing.converter.ImageToLanguageImpl
 import sh.hsp.labella.services.printing.converter.mono.SimpleImageToMono
 import sh.hsp.labella.services.printing.converter.zebra.MonoToEpl
+import sh.hsp.labella.services.renderer.RendererService
 import sh.hsp.labella.services.renderer.RendererServiceImpl
 import sh.hsp.labella.services.template.MockTemplateService
 import sh.hsp.labella.services.template.SimpleTemplateService
@@ -24,13 +25,19 @@ class MainConfiguration {
     }
 
     @Bean
+    fun rendererService(): RendererService {
+        return RendererServiceImpl()
+    }
+
+    @Bean
     fun printingService(
         @Value("\${printerName}") printerName: String,
-        templateService: TemplateService
+        templateService: TemplateService,
+        rendererService: RendererService
     ): PrintingService =
         LanguagePrintingService(
             templateService,
-            RendererServiceImpl(),
+            rendererService,
             ImageToLanguageImpl(
                 SimpleImageToMono(),
                 MonoToEpl()

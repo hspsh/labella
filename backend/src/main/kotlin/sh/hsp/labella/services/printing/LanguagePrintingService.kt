@@ -20,7 +20,7 @@ class LanguagePrintingService(
             rendererService.render(
                 RenderingInput.MdRenderingInput(
                     template,
-                    PrintDimensions(400, 240)
+                    PrintDimensions.ORANGE_LABEL
                 )
             ).image
         }
@@ -31,7 +31,7 @@ class LanguagePrintingService(
             rendererService.render(
                 RenderingInput.SVGRenderingInput(
                     template,
-                    PrintDimensions(400, 240)
+                    PrintDimensions.ORANGE_LABEL
                 )
             ).image
         }

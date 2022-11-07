@@ -16,6 +16,9 @@ class Template {
     @Column(name = "name")
     var name: String? = null
 
+    @Column(name = "type")
+    var type: TemplateType = TemplateType.SVG
+
     @Column(name = "template")
     var template: String = ""
 
@@ -32,8 +35,13 @@ class Template {
         updated = Date()
         created = Date()
     }
+
     @PreUpdate
     fun onUpdate() {
         updated = Date()
     }
+}
+
+enum class TemplateType {
+    SVG, MD
 }
