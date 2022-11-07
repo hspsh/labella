@@ -11,6 +11,7 @@ import sh.hsp.labella.services.printing.converter.mono.SimpleImageToMono
 import sh.hsp.labella.services.printing.converter.zebra.MonoToEpl
 import sh.hsp.labella.services.renderer.RendererServiceImpl
 import sh.hsp.labella.services.template.MockTemplateService
+import sh.hsp.labella.services.template.SimpleTemplateService
 import sh.hsp.labella.services.template.TemplateService
 
 
@@ -19,7 +20,7 @@ class MainConfiguration {
 
     @Bean
     fun templateService(): TemplateService {
-        return MockTemplateService()
+        return SimpleTemplateService()
     }
 
     @Bean
