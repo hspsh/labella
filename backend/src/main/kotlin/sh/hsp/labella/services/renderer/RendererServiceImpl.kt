@@ -3,8 +3,8 @@ package sh.hsp.labella.services.renderer
 import org.im4java.core.ConvertCmd
 import org.im4java.core.IMOperation
 import org.im4java.process.Pipe
-import sh.hsp.labella.services.renderer.RenderingInput.MdRenderingInput
-import sh.hsp.labella.services.renderer.RenderingInput.SVGRenderingInput
+import sh.hsp.labella.model.RenderingInput
+import sh.hsp.labella.model.RenderingOutput
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -15,11 +15,11 @@ class RendererServiceImpl : RendererService {
 
     override fun render(renderingInput: RenderingInput): RenderingOutput =
         when (renderingInput) {
-            is SVGRenderingInput -> renderSvg(renderingInput)
-            is MdRenderingInput -> throw UnsupportedOperationException("Markdown not supported yet")
+            is RenderingInput.SVGRenderingInput -> renderSvg(renderingInput)
+            is RenderingInput.MdRenderingInput -> throw UnsupportedOperationException("Markdown not supported yet")
         }
 
-    private fun renderSvg(input: SVGRenderingInput): RenderingOutput {
+    private fun renderSvg(input: RenderingInput.SVGRenderingInput): RenderingOutput {
 
         val dimens = input.printDimensions
 

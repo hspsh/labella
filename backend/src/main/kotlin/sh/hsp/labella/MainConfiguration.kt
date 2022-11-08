@@ -51,7 +51,7 @@ class MainConfiguration {
         templateService: TemplateService,
         rendererService: RendererService,
         templateRepository: TemplateRepository
-    ) {
+    ) =
         LanguagePrintingService(
             templateService,
             rendererService,
@@ -59,7 +59,6 @@ class MainConfiguration {
             languagePrinterService,
             templateRepository
         )
-    }
 
     @Bean
     fun templatingService(
