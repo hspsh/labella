@@ -7,7 +7,7 @@ import sh.hsp.labella.services.template.TemplateService
 import java.awt.image.BufferedImage
 
 @RestController
-@RequestMapping(path = ["/templates/{templateId}/preview"])
+@RequestMapping(path = ["/api/templates/{templateId}/preview"])
 class PreviewController(
     val templateService: TemplateService,
     val rendererService: RendererService,

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import sh.hsp.labella.services.printing.LanguagePrintingService
 
 @RestController
-@RequestMapping(path = ["/templates/{templateId}/print"])
+@RequestMapping(path = ["/api/templates/{templateId}/print"])
 class PrintingController(
     val languagePrintingService: LanguagePrintingService
 ) {

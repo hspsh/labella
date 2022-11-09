@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
 
 @RestController
-@RequestMapping(path = ["/templates/{templateId}/attributes"])
+@RequestMapping(path = ["/api/templates/{templateId}/attributes"])
 class TemplateAttributeController(
     val templatingServiceImpl: TemplatingServiceImpl
 ) {
