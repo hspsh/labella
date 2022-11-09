@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { Button, Form, Card } from "react-bootstrap";
-import FileReaderInput from "react-file-reader-input";
 
 import Template from "../common/Template";
+import FormFile from "../components/FormFile";
 
 enum TemplateType {
   SVG,
@@ -45,11 +45,7 @@ export default function TemplateForm({
       contentInput = (
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Label>Plik SVG</Form.Label>
-          <FileReaderInput as="text" id="my-file-input" onChange={fileHandler}>
-            <button className="btn-outline-primary form-control">
-              Prześlij plik
-            </button>
-          </FileReaderInput>
+          <FormFile as="text" onChange={fileHandler} />
         </Form.Group>
       );
       break;
