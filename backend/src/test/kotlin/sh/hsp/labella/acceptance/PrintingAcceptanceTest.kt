@@ -27,8 +27,8 @@ class PrintingAcceptanceTest {
     @Autowired
     lateinit var rest: TestRestTemplate;
 
-    @MockBean // So the test will work even if you ain't have printer defined
-    lateinit var printerService: LanguagePrinterService
+//    @MockBean // So the test will work even if you ain't have printer defined
+//    lateinit var printerService: LanguagePrinterService
 
     @Test
     fun whenTemplateIsAddedAndPrintedThenSucceeds() {
@@ -54,7 +54,7 @@ class PrintingAcceptanceTest {
         template.name = "Something"
         template.type = Template.TemplateType.SVG
         template.template =
-            DefaultResourceLoader().getResource("selection.svg").inputStream.bufferedReader()
+            DefaultResourceLoader().getResource("img.svg").inputStream.bufferedReader()
                 .use(BufferedReader::readText)
         return template
     }
