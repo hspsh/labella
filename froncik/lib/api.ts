@@ -1,6 +1,6 @@
 import Template, { TemplateType } from "../common/Template";
 
-const API_PATH = "http://localhost:8080/api";
+const API_PATH = "/api";
 
 const API = {
   templates: {
