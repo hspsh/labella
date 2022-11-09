@@ -26,4 +26,4 @@ The more you know Spring the better.
 ## Production
 
 If you are running it outside the docker, then please run:
-`java -jar app.jar -Dspring.datasource.url=jdbc:h2:file:/path/to/labella/db -Dserver.port=80 -"
+`java -Dspring.datasource.url=jdbc:h2:file:/path/to/labella/db -Dserver.port=8080 -jar app.jar"
