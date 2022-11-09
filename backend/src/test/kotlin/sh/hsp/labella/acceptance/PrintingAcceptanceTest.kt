@@ -26,7 +26,7 @@ class PrintingAcceptanceTest {
         val template = createTemplate()
 
         val templateResponse =
-            rest.postForEntity("/templates", template, IdOnly::class.java, emptyMap<String, String>())
+            rest.postForEntity("/api/templates", template, IdOnly::class.java, emptyMap<String, String>())
         val id = templateResponse.body!!.id
         Assertions.assertEquals(HttpStatus.CREATED, templateResponse.statusCode)
 
