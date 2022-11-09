@@ -3,6 +3,8 @@ package sh.hsp.labella
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.converter.BufferedImageHttpMessageConverter
+import org.springframework.http.converter.HttpMessageConverter
 import sh.hsp.labella.controller.TemplateRepository
 import sh.hsp.labella.services.printer.LanguagePrinterService
 import sh.hsp.labella.services.printer.LanguagePrinterServiceImpl
@@ -18,6 +20,7 @@ import sh.hsp.labella.services.svg.SvgSizeExtractorImpl
 import sh.hsp.labella.services.template.SimpleTemplateService
 import sh.hsp.labella.services.template.TemplateService
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
+import java.awt.image.BufferedImage
 
 
 @Configuration
@@ -45,6 +48,9 @@ class MainConfiguration {
             MonoToEpl()
         )
     }
+
+    @Bean
+    fun bufferedImageHttpMessageConverter(): HttpMessageConverter<BufferedImage> = BufferedImageHttpMessageConverter()
 
     @Bean
     fun svgSizeExtractor() =
