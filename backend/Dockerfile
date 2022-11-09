@@ -7,4 +7,5 @@ FROM openjdk:17-jdk-alpine as labella
 RUN apk --update add imagemagick
 COPY --from=0 target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+VOLUME /data
+ENTRYPOINT ["java","-jar","/app.jar","-Dspring.datasource.url=jdbc:h2:file:./data/labella"]
