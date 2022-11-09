@@ -1,6 +1,6 @@
-import Template from "../common/Template";
+import Template, { TemplateType } from "../common/Template";
 
-const API_PATH = "http://localhost:8080";
+const API_PATH = "http://localhost:8080/api";
 
 const API = {
   templates: {
@@ -9,7 +9,12 @@ const API = {
         .then((req) => req.json())
         .then((data) => data._embedded.templates as Template[]);
     },
-    create(name: string, content: string): Promise<Template> {
+    create(
+      name: string,
+      content: string,
+      type: TemplateType
+    ): Promise<Template> {
+      const typeStr: String = TemplateType[type];
       return fetch(`${API_PATH}/templates`, {
         method: "POST",
         headers: {
@@ -18,6 +23,7 @@ const API = {
         body: JSON.stringify({
           name,
           template: content,
+          type: typeStr,
         }),
       }).then((req) => req.json());
     },
@@ -26,7 +32,13 @@ const API = {
         method: "GET",
       }).then((req) => req.json());
     },
-    update(id: number, name: string, content: string): Promise<Template> {
+    update(
+      id: number,
+      name: string,
+      content: string,
+      type: TemplateType
+    ): Promise<Template> {
+      const typeStr: String = TemplateType[type];
       return fetch(`${API_PATH}/templates/${id}`, {
         method: "PUT",
         headers: {
@@ -35,6 +47,7 @@ const API = {
         body: JSON.stringify({
           name,
           template: content,
+          type: typeStr,
         }),
       }).then((req) => req.json());
     },

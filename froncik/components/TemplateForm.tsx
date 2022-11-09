@@ -62,6 +62,7 @@ export default function TemplateForm({
               submitCallback({
                 name: refName?.current?.value || "",
                 template: refContent?.current?.value || "",
+                type: templateType
               });
           }}
         >
