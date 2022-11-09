@@ -45,7 +45,7 @@ class PrintingAcceptanceTest {
         template.name = "Something"
         template.type = Template.TemplateType.SVG
         template.template =
-            DefaultResourceLoader().getResource("img.svg").inputStream.bufferedReader()
+            this.javaClass.getResource("img.svg").openStream().bufferedReader()
                 .use(BufferedReader::readText)
         return template
     }

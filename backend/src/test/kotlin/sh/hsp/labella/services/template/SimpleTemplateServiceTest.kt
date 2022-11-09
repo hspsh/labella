@@ -28,7 +28,7 @@ class SimpleTemplateServiceTest {
 
     @Test
     fun givenSvgWhenTemplatedThenCurledShouldBecomeText() {
-        val svg = this.javaClass.getResource("sh/hsp/labella/acceptance/320x224.svg").readText()
+        val svg = this.javaClass.getResource("320x224.svg").readText()
         val svgTemplated = this.javaClass.getResource("320x224-templated.svg").readText()
 
         val templated = simpleTemplateService.render(svg, emptyMap())
