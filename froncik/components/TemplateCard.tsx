@@ -25,13 +25,15 @@ export default function TemplateCard({ template }: Props) {
     >
       <Card.Header>{template.name}</Card.Header>
       <Stack direction="horizontal">
-        <Card.Img
-          src={`https://via.placeholder.com/150x90?text=${encodeURI(
-            template.template
-          )}`}
-          alt="Card image"
-          style={{ "--bs-card-inner-border-radius": 0 } as React.CSSProperties}
-        />
+        <div style={{ display: "inline-table" }}>
+          <Card.Img
+            src={API.templates.previewSrc(template.id)}
+            alt="Card image"
+            style={
+              { "--bs-card-inner-border-radius": 0 } as React.CSSProperties
+            }
+          />
+        </div>
         <Stack>
           <ButtonGroup
             vertical

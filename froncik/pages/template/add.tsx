@@ -10,7 +10,7 @@ export default function Add({}: Props) {
     <TemplateForm
       submitText="Dodaj"
       submitCallback={(template) => {
-        API.templates.create(template.name, template.template);
+        API.templates.create(template.name, template.template, template.type);
       }}
     />
   );

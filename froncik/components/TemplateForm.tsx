@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Button, Form, Card } from "react-bootstrap";
 
 import Template from "../common/Template";
+import FormFile from "../components/FormFile";
 
 enum TemplateType {
   SVG,
@@ -22,10 +23,21 @@ export default function TemplateForm({
   submitCallback,
 }: Props = defaultProps) {
   const [templateType, setTemplateType] = useState<TemplateType>(
-    TemplateType.MD
+    TemplateType.SVG
   );
+  const [templateContents, setTemplateContents] = useState("");
+
   const refName = useRef<HTMLInputElement>(null);
   const refContent = useRef<HTMLInputElement>(null);
+
+  const fileHandler = async (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    results: [ProgressEvent, File][]
+  ) => {
+    const file = results[0][1];
+    const contents = await file.text();
+    setTemplateContents(contents);
+  };
 
   let contentInput;
   switch (templateType) {
@@ -33,7 +45,7 @@ export default function TemplateForm({
       contentInput = (
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Label>Plik SVG</Form.Label>
-          <Form.Control type="file" />
+          <FormFile as="text" onChange={fileHandler} />
         </Form.Group>
       );
       break;
@@ -41,7 +53,7 @@ export default function TemplateForm({
     case TemplateType.MD: {
       contentInput = (
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Control as="textarea" placeholder="Treść szablonu" />
+          <Form.Control as="textarea" placeholder="Treść szablonu" disabled />
           <Form.Text className="text-muted">
             Napisy poprzedzone znakiem dolara zostaną podmienione na zmienne.
           </Form.Text>
@@ -61,7 +73,8 @@ export default function TemplateForm({
             submitCallback &&
               submitCallback({
                 name: refName?.current?.value || "",
-                template: refContent?.current?.value || "",
+                template: templateContents,
+                type: templateType,
               });
           }}
         >
@@ -96,6 +109,12 @@ export default function TemplateForm({
             />
             <Form.Text className="text-muted" ref={refContent}>
               Prześlij plik svg lub wypełnić treść w markdown.
+              {templateType === TemplateType.MD && (
+                <span className="text-danger">
+                  {" "}
+                  Format Makrdown nie jest obecnie wspierany
+                </span>
+              )}
             </Form.Text>
           </Form.Group>
 

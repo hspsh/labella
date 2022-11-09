@@ -10,11 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/react-file-reader-input": "^2.0.1",
     "bootstrap": "^5.2.2",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-file-reader-input": "github:KGrzeg/react-file-reader-input"
   },
   "devDependencies": {
     "@types/node": "18.11.7",

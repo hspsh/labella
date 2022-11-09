@@ -16,7 +16,7 @@ export default function Edit() {
     <TemplateForm
       submitText="Aktualizuj"
       submitCallback={(template) => {
-        API.templates.update(id, template.name, template.template);
+        API.templates.update(id, template.name, template.template, template.type);
       }}
     />
   );
