@@ -27,8 +27,8 @@ class PrintingAcceptanceTest {
     @Autowired
     lateinit var rest: TestRestTemplate;
 
-//    @MockBean // So the test will work even if you ain't have printer defined
-//    lateinit var printerService: LanguagePrinterService
+    @MockBean // So the test will work even if you ain't have printer defined
+    lateinit var printerService: LanguagePrinterService
 
     @Test
     fun whenTemplateIsAddedAndPrintedThenSucceeds() {
