@@ -22,20 +22,23 @@ class RendererServiceImpl : RendererService {
     private fun renderSvg(input: RenderingInput.SVGRenderingInput): RenderingOutput {
 
         val dimens = input.printDimensions
-
-        val cmd = ConvertCmd()
-        val cmdInputStream = input.content.byteInputStream()
         val cmdOutputStream = ByteArrayOutputStream()
-        val pipe = Pipe(cmdInputStream, cmdOutputStream)
+        val pipe = Pipe(input.content.byteInputStream(), cmdOutputStream)
 
-        val op = IMOperation()
-        op.addImage("svg:-")
-        op.resize(dimens.xInPixels, dimens.yInPixel)
-        op.addImage("png:-")
+        val op = IMOperation().apply {
+            addImage("svg:-")
+            resize(dimens.xInPixels, dimens.yInPixel)
+            background("white")
+            gravity("center")
+            extent(dimens.xInPixels, dimens.yInPixel)
+            addImage("png:-")
+        }
 
-        cmd.setInputProvider(pipe)
-        cmd.setOutputConsumer(pipe)
-        cmd.run(op)
+        ConvertCmd().apply {
+            setInputProvider(pipe)
+            setOutputConsumer(pipe)
+            run(op)
+        }
 
         val bufferedImageStream = ByteArrayInputStream(cmdOutputStream.toByteArray())
         val bufferedImage: BufferedImage = ImageIO.read(bufferedImageStream)

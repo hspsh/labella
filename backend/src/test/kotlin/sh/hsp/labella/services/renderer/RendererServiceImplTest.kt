@@ -15,15 +15,15 @@ class RendererServiceImplTest {
     fun `GIVEN SVG content WHEN render called SHOULD render PNG`() {
         // Given
         val expected = ImageIO.read(this.javaClass.getResourceAsStream("cmp.png"))
-        val dimensions = PrintDimensions(200, 200)
+        val dimensions = PrintDimensions(320, 224)
         val content = this.javaClass.getResource("img.svg").readText()
         val svgInput = RenderingInput.SVGRenderingInput(content, dimensions)
         val rendererService = RendererServiceImpl()
         // When
         val renderingOutput = rendererService.render(svgInput)
         // Then
-        assert(renderingOutput.image.width == 200)
-        assert(renderingOutput.image.height == 200)
+        assert(renderingOutput.image.width == 320)
+        assert(renderingOutput.image.height == 224)
         assert(expected.imageEqual(renderingOutput.image))
     }
 }
