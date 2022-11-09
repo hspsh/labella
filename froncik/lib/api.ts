@@ -56,6 +56,9 @@ const API = {
         method: "DELETE",
       });
     },
+    previewSrc(id: number) {
+      return `${API_PATH}/templates/${id}/preview`;
+    }
   },
 };
 
