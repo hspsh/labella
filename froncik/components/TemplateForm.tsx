@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Button, Form, Card } from "react-bootstrap";
+import FileReaderInput from "react-file-reader-input";
 
 import Template from "../common/Template";
 
@@ -24,8 +25,19 @@ export default function TemplateForm({
   const [templateType, setTemplateType] = useState<TemplateType>(
     TemplateType.SVG
   );
+  const [templateContents, setTemplateContents] = useState("");
+
   const refName = useRef<HTMLInputElement>(null);
   const refContent = useRef<HTMLInputElement>(null);
+
+  const fileHandler = async (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    results: [ProgressEvent, File][]
+  ) => {
+    const file = results[0][1];
+    const contents = await file.text();
+    setTemplateContents(contents);
+  };
 
   let contentInput;
   switch (templateType) {
@@ -33,7 +45,11 @@ export default function TemplateForm({
       contentInput = (
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Label>Plik SVG</Form.Label>
-          <Form.Control type="file" />
+          <FileReaderInput as="text" id="my-file-input" onChange={fileHandler}>
+            <button className="btn-outline-primary form-control">
+              Prześlij plik
+            </button>
+          </FileReaderInput>
         </Form.Group>
       );
       break;
@@ -61,7 +77,7 @@ export default function TemplateForm({
             submitCallback &&
               submitCallback({
                 name: refName?.current?.value || "",
-                template: refContent?.current?.value || "",
+                template: templateContents,
                 type: templateType,
               });
           }}
