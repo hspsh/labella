@@ -77,6 +77,18 @@ const API = {
       return `${API_PATH}/templates/${id}/preview`;
     },
   },
+  labels: {
+    previewSrc(id: number, fields: Record<string, string>) {
+      let queryString = "";
+
+      for (const key in fields) {
+        const val = fields[key];
+        queryString += `${encodeURI(key)}=${encodeURI(val)}`;
+      }
+
+      return `${API_PATH}/templates/${id}/preview?${queryString}`;
+    },
+  },
 };
 
 export default API;

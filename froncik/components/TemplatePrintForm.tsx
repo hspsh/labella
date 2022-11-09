@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 
 import API from "../lib/api";
@@ -6,6 +6,7 @@ import API from "../lib/api";
 type Props = {
   attributes: string[];
   id: number;
+  onChange?: (fields: Record<string, string>) => void;
 };
 
 const arrayOfStringToObjectKeys = (arr: string[]) => {
@@ -17,23 +18,28 @@ const arrayOfStringToObjectKeys = (arr: string[]) => {
   }, {});
 };
 
-export default function TemplatePrinterForm({ attributes, id }: Props) {
+export default function TemplatePrinterForm({
+  attributes,
+  id,
+  onChange,
+}: Props) {
   const [fields, setFields] = useState<Record<string, string>>(
     arrayOfStringToObjectKeys(attributes)
   );
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Dzieje sieee");
-
     const name = event.target.name;
     setFields((lastFields) => {
-      console.log(`Zmien wartosc ${name} na ${event.target.value}`);
       return {
         ...lastFields,
         [name]: event.target.value,
       };
     });
   };
+
+  useEffect(() => {
+    onChange && onChange(fields);
+  }, [fields, onChange]);
 
   return (
     <Card>

@@ -2,9 +2,10 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 
 type Props = {
   form: React.ReactNode;
+  previewSrc?: string
 };
 
-export default function add({ form }: Props) {
+export default function FormWithPreview({ form, previewSrc }: Props) {
   return (
     <Container>
       <Row>
@@ -21,7 +22,7 @@ export default function add({ form }: Props) {
           >
             <Card.Header>Podgląd</Card.Header>
             <Card.Img
-              src="https://via.placeholder.com/150x90?text=elo%20mordzie"
+              src={previewSrc}
               alt="Card image"
             />
           </Card>
