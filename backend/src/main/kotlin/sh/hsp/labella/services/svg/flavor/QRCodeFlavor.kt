@@ -1,6 +1,5 @@
 package sh.hsp.labella.services.svg.flavor
 
-import sh.hsp.labella.model.PrintDimensions
 import javax.xml.parsers.DocumentBuilderFactory
 
 class QRCodeFlavor : SVGFlavor {
@@ -19,7 +18,6 @@ class QRCodeFlavor : SVGFlavor {
                 val width = image.attributes.getNamedItem("width").textContent.toInt()
                 val height = image.attributes.getNamedItem("height").textContent.toInt()
 
-                val generatedQrCode =
 
             }
         }
