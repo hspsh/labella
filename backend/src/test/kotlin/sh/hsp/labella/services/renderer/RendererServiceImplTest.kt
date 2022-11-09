@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import sh.hsp.labella.model.PrintDimensions
 import sh.hsp.labella.model.RenderingInput
 import java.awt.image.BufferedImage
+import java.nio.Buffer
 import javax.imageio.ImageIO
 
 class RendererServiceImplTest {
@@ -23,18 +24,17 @@ class RendererServiceImplTest {
         // Then
         assert(renderingOutput.image.width == 200)
         assert(renderingOutput.image.height == 200)
-        assert(bufferedImagesEqual(expected, renderingOutput.image))
+        assert(expected.imageEqual(renderingOutput.image))
     }
+}
 
-    private fun bufferedImagesEqual(img1: BufferedImage, img2: BufferedImage): Boolean {
-        if (img1.width != img2.width || img1.height != img2.height) return false
-        for (x in 0 until img1.width) {
-            for (y in 0 until img1.height) {
-                if (img1.getRGB(x, y) != img2.getRGB(x, y))
-                    return false
-            }
+fun BufferedImage.imageEqual(other: BufferedImage): Boolean {
+    if (this.width != other.width || this.height != other.height) return false
+    for (x in 0 until this.width) {
+        for (y in 0 until this.height) {
+            if (this.getRGB(x, y) != other.getRGB(x, y))
+                return false
         }
-        return true
     }
-
+    return true
 }

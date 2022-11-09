@@ -59,7 +59,7 @@ class Template {
 
         val printDimensions = svgSizeExtractor.apply(templated) ?: PrintDimensions.ORANGE_LABEL
 
-        return renderer.apply(RenderingInput.SVGRenderingInput(template, printDimensions))
+        return renderer.apply(RenderingInput.SVGRenderingInput(templated, printDimensions))
     }
 
     fun fields(fieldExtractor: Function<String, List<String>>): List<String> =
