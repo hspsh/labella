@@ -32,7 +32,7 @@ class PrintingAcceptanceTest {
 
         val printingResponse =
             rest.postForEntity(
-                "/templates/${id}/print",
+                "/api/templates/${id}/print",
                 PrintDTO(emptyMap()),
                 Nothing::class.java,
                 emptyMap<String, String>()
