@@ -56,9 +56,26 @@ const API = {
         method: "DELETE",
       });
     },
+    attributes(id: number): Promise<string[]> {
+      return fetch(`${API_PATH}/templates/${id}/attributes`)
+        .then((res) => res.json())
+        .then((data) => data.fields);
+    },
+    print(id: number, attributes: Record<string, string>) {
+      return fetch(`${API_PATH}/templates/${id}/print`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fields: attributes,
+        }),
+      });
+    },
+
     previewSrc(id: number) {
       return `${API_PATH}/templates/${id}/preview`;
-    }
+    },
   },
 };
 

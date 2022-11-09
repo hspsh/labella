@@ -17,13 +17,14 @@ export default function Print({}: Props) {
   const [attributes, setAttributes] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!id) return;
+
     API.templates.attributes(id).then((fields) => {
-      console.log(fields);
       setAttributes(fields);
     });
-  }, []);
+  }, [id]);
 
-  const form = <TemplatePrintForm variables={attributes} />;
+  const form = <TemplatePrintForm attributes={attributes} id={id} />;
 
   return <FormWithPreview form={form} />;
 }
