@@ -1,7 +1,9 @@
 # QUICKSTART
-Just use docker, not sure though if it will work.  
-Your printer has to be named `printerName=EPL1_EPL1_Label_Printer`.  
-It will work with: `docker run --net=host labella`.
+Just use docker, not sure though if it will work.
+Your printer has to be named `printerName=EPL1_EPL1_Label_Printer`.
+
+To build: `docker build . -t labella`.
+To run: `docker run --net=host labella`.
 
 # Developer start
 You should just run it as a normal java developer.  
