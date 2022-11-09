@@ -11,7 +11,7 @@ class PreviewController(
     val languagePrintingService: LanguagePrintingService
 ) {
     @GetMapping(produces = ["image/png"])
-    fun preview(@PathVariable templateId: Long/*, @RequestParam fields: Map<String, String>*/): BufferedImage {
-        return languagePrintingService.preview(templateId, emptyMap()).image
+    fun preview(@PathVariable templateId: Long, @RequestParam fields: Map<String, String>): BufferedImage {
+        return languagePrintingService.preview(templateId, fields).image
     }
 }
