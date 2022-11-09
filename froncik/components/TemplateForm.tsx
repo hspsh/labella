@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button, Form, Card } from "react-bootstrap";
+
+import Template from "../common/Template";
 
 enum TemplateType {
   SVG,
@@ -8,21 +10,22 @@ enum TemplateType {
 
 type Props = {
   submitText?: string;
-  submitCallback?: () => void;
+  submitCallback?: (template: Omit<Template, "id">) => void;
 };
 
 const defaultProps: Props = {
   submitText: "Dodaj",
-  submitCallback: () => {},
 };
 
-export default function add({
+export default function TemplateForm({
   submitText,
   submitCallback,
 }: Props = defaultProps) {
   const [templateType, setTemplateType] = useState<TemplateType>(
-    TemplateType.SVG
+    TemplateType.MD
   );
+  const refName = useRef<HTMLInputElement>(null);
+  const refContent = useRef<HTMLInputElement>(null);
 
   let contentInput;
   switch (templateType) {
@@ -51,10 +54,24 @@ export default function add({
   return (
     <Card>
       <Card.Body>
-        <Form onSubmit={submitCallback}>
+        <Form
+          onSubmit={(event) => {
+            event.preventDefault();
+
+            submitCallback &&
+              submitCallback({
+                name: refName?.current?.value || "",
+                template: refContent?.current?.value || "",
+              });
+          }}
+        >
           <Form.Group className="mb-3">
             <Form.Label>Nazwa Szablonu</Form.Label>
-            <Form.Control type="text" placeholder="wprowadź nazwę" />
+            <Form.Control
+              type="text"
+              placeholder="wprowadź nazwę"
+              ref={refName}
+            />
             <Form.Text className="text-muted">
               Fajną nazwę daj, taką unikalną.
             </Form.Text>
@@ -77,7 +94,7 @@ export default function add({
               checked={templateType === TemplateType.MD}
               onChange={() => setTemplateType(TemplateType.MD)}
             />
-            <Form.Text className="text-muted">
+            <Form.Text className="text-muted" ref={refContent}>
               Prześlij plik svg lub wypełnić treść w markdown.
             </Form.Text>
           </Form.Group>
