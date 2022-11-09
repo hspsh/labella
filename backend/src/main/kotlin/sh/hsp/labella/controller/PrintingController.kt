@@ -6,6 +6,7 @@ import sh.hsp.labella.services.printing.LanguagePrintingService
 
 @RestController
 @RequestMapping(path = ["/api/templates/{templateId}/print"])
+@CrossOrigin(origins = ["*"] )
 class PrintingController(
     val languagePrintingService: LanguagePrintingService
 ) {

@@ -1,13 +1,11 @@
 package sh.hsp.labella.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
 
 @RestController
 @RequestMapping(path = ["/api/templates/{templateId}/attributes"])
+@CrossOrigin(origins = ["*"] )
 class TemplateAttributeController(
     val templatingServiceImpl: TemplatingServiceImpl
 ) {
