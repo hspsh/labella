@@ -13,6 +13,8 @@ import sh.hsp.labella.services.printer.converter.zebra.MonoToEpl
 import sh.hsp.labella.services.printing.LanguagePrintingService
 import sh.hsp.labella.services.renderer.RendererService
 import sh.hsp.labella.services.renderer.RendererServiceImpl
+import sh.hsp.labella.services.svg.SvgSizeExtractor
+import sh.hsp.labella.services.svg.SvgSizeExtractorImpl
 import sh.hsp.labella.services.template.SimpleTemplateService
 import sh.hsp.labella.services.template.TemplateService
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
@@ -45,15 +47,21 @@ class MainConfiguration {
     }
 
     @Bean
+    fun svgSizeExtractor() =
+        SvgSizeExtractorImpl()
+
+    @Bean
     fun languagePrintingService(
         languagePrinterService: LanguagePrinterService,
         imageToLanguage: ImageToLanguage,
         templateService: TemplateService,
+        svgSizeExtractor: SvgSizeExtractor,
         rendererService: RendererService,
         templateRepository: TemplateRepository
     ) =
         LanguagePrintingService(
             templateService,
+            svgSizeExtractor,
             rendererService,
             imageToLanguage,
             languagePrinterService,

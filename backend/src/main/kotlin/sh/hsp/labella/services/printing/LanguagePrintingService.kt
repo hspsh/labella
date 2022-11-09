@@ -6,10 +6,12 @@ import sh.hsp.labella.model.RenderingOutput
 import sh.hsp.labella.services.printer.LanguagePrinterService
 import sh.hsp.labella.services.printer.converter.ImageToLanguage
 import sh.hsp.labella.services.renderer.RendererService
+import sh.hsp.labella.services.svg.SvgSizeExtractor
 import sh.hsp.labella.services.template.TemplateService
 
 class LanguagePrintingService(
     val templateService: TemplateService,
+    val svgSizeExtractor: SvgSizeExtractor,
     val rendererService: RendererService,
     val imageToLanguage: ImageToLanguage,
     val languagePrinterService: LanguagePrinterService,
@@ -36,7 +38,7 @@ class LanguagePrintingService(
                 .render(
                     fields,
                     { content, fields -> templateService.render(content, fields) },
-                    { _ -> null },
+                    { svgSizeExtractor.extract(it) },
                     { input -> rendererService.render(input) }
                 )
 
