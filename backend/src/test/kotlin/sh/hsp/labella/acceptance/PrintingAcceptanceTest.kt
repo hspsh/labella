@@ -1,26 +1,17 @@
 package sh.hsp.labella.acceptance
 
-import org.json.JSONObject
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.postForObject
 import org.springframework.core.io.DefaultResourceLoader
-import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.http.RequestEntity
 import sh.hsp.labella.controller.PrintDTO
 import sh.hsp.labella.model.Template
 import sh.hsp.labella.services.printer.LanguagePrinterService
 import java.io.BufferedReader
-import java.lang.NullPointerException
-import java.lang.RuntimeException
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PrintingAcceptanceTest {
