@@ -13,8 +13,8 @@ import sh.hsp.labella.services.printer.converter.ImageToLanguageImpl
 import sh.hsp.labella.services.printer.converter.mono.SimpleImageToMono
 import sh.hsp.labella.services.printer.converter.zebra.MonoToEpl
 import sh.hsp.labella.services.printing.LanguagePrintingService
+import sh.hsp.labella.services.renderer.InkscapeRendererService
 import sh.hsp.labella.services.renderer.RendererService
-import sh.hsp.labella.services.renderer.RendererServiceImpl
 import sh.hsp.labella.services.svg.SvgSizeExtractor
 import sh.hsp.labella.services.svg.SvgSizeExtractorImpl
 import sh.hsp.labella.services.template.SimpleTemplateService
@@ -33,7 +33,7 @@ class MainConfiguration {
 
     @Bean
     fun rendererService(): RendererService {
-        return RendererServiceImpl()
+        return InkscapeRendererService()
     }
 
     @Bean

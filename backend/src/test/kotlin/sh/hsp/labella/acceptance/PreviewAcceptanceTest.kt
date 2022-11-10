@@ -10,10 +10,8 @@ import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.http.HttpStatus
 import sh.hsp.labella.model.Template
 import sh.hsp.labella.services.printer.LanguagePrinterService
-import sh.hsp.labella.services.renderer.imageEqual
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
-import javax.imageio.ImageIO
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PreviewAcceptanceTest {

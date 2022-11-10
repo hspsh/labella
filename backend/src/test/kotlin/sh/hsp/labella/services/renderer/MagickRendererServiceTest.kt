@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage
 import java.nio.Buffer
 import javax.imageio.ImageIO
 
-class RendererServiceImplTest {
+class MagickRendererServiceTest {
 
     @Test
     @Disabled("Two images do not match, no idea why")
@@ -18,7 +18,7 @@ class RendererServiceImplTest {
         val dimensions = PrintDimensions(320, 224)
         val content = this.javaClass.getResource("img.svg").readText()
         val svgInput = RenderingInput.SVGRenderingInput(content, dimensions)
-        val rendererService = RendererServiceImpl()
+        val rendererService = MagickRendererService()
         // When
         val renderingOutput = rendererService.render(svgInput)
         // Then

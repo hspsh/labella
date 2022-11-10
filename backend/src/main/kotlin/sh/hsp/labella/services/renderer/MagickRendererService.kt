@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
 
-class RendererServiceImpl : RendererService {
+class MagickRendererService : RendererService {
 
     override fun render(renderingInput: RenderingInput): RenderingOutput =
         when (renderingInput) {
