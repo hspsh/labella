@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageConverter
 import sh.hsp.labella.controller.TemplateRepository
 import sh.hsp.labella.services.printer.LanguagePrinterService
 import sh.hsp.labella.services.printer.LanguagePrinterServiceImpl
+import sh.hsp.labella.services.printer.LpCliLanguagePrinterService
 import sh.hsp.labella.services.printer.converter.ImageToLanguage
 import sh.hsp.labella.services.printer.converter.ImageToLanguageImpl
 import sh.hsp.labella.services.printer.converter.mono.SimpleImageToMono
@@ -37,8 +38,8 @@ class MainConfiguration {
     }
 
     @Bean
-    fun printerService(@Value("\${printerName}") printerName: String): LanguagePrinterServiceImpl {
-        return LanguagePrinterServiceImpl(printerName)
+    fun printerService(@Value("\${printerName}") printerName: String): LanguagePrinterService {
+        return LpCliLanguagePrinterService(printerName)
     }
 
     @Bean
