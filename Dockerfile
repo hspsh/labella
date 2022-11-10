@@ -3,14 +3,14 @@ ADD ./froncik/ .
 RUN npm install
 RUN npm run export
 FROM openjdk:17-jdk-alpine
-RUN apk --update add imagemagick
+RUN apk --update add inkscape
 
 ADD ./backend/ .
 COPY --from=0 out/* backend/src/main/resources/static/
 RUN ./mvnw package
 
 FROM openjdk:17-jdk-alpine as labella
-RUN apk --update add imagemagick
+RUN apk --update add inkscape
 RUN apk add terminus-font ttf-inconsolata ttf-dejavu font-noto font-noto-cjk ttf-font-awesome font-noto-extra
 COPY --from=1 target/*.jar app.jar
 VOLUME /data

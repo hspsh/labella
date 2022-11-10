@@ -27,17 +27,12 @@ class LpCliLanguagePrinterService : LanguagePrinterService {
         try {
             tmpFile.writeBytes(image)
 
-            val process = Runtime.getRuntime().exec(
-                arrayOf(
-                    "lpr",
-                    "-P${printerName}",
-                    tmpFile.absolutePath
-                )
-            )
+            val cmd = "lp -d ${printerName} -o raw ${tmpFile.absolutePath}"
+            val process = Runtime.getRuntime().exec(cmd)
 
             val exit = process.waitFor()
 
-            logger.info("Printing exit code ${exit}")
+            logger.info("CMD $cmd exit code $exit")
 
         } finally {
             tmpFile.delete()
