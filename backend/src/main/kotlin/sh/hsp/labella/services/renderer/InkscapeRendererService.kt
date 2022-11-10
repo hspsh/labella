@@ -34,10 +34,10 @@ class InkscapeRendererService : RendererService {
                         "--export-height=${renderingInput.printDimensions.yInPixel}",
                         "--export-type=png",
                         "--export-filename=${outputFile.absolutePath}",
+                        "--without-gui",
                         inputFile.absolutePath
                     )
                 )
-            Thread.sleep(1000)
             val executed = inkscape.waitFor();
 
             val image = ImageIO.read(outputFile)
