@@ -1,11 +1,14 @@
 package sh.hsp.labella.services.renderer
 
+import com.sun.istack.logging.Logger
 import sh.hsp.labella.model.RenderingInput
 import sh.hsp.labella.model.RenderingOutput
 import java.io.File
 import javax.imageio.ImageIO
 
 class InkscapeRendererService : RendererService {
+    val logger = Logger.getLogger(InkscapeRendererService::class.java)
+
     constructor() {
         if (Runtime.getRuntime().exec("inkscape --version").waitFor() != 0) {
             throw IllegalStateException("Inkscape must be installed")
@@ -32,13 +35,12 @@ class InkscapeRendererService : RendererService {
                         "--export-background=white",
                         "--export-width=${renderingInput.printDimensions.xInPixels}",
                         "--export-height=${renderingInput.printDimensions.yInPixel}",
-                        "--export-type=png",
-                        "--export-filename=${outputFile.absolutePath}",
-                        "--without-gui",
+                        "--export-png=${outputFile.absolutePath}",
                         inputFile.absolutePath
                     )
                 )
             val executed = inkscape.waitFor();
+            logger.info("Inkscape exited with: $executed")
 
             val image = ImageIO.read(outputFile)
             return RenderingOutput(image)
