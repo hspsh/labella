@@ -31,7 +31,6 @@ class LpCliLanguagePrinterService : LanguagePrinterService {
                 arrayOf(
                     "lpr",
                     "-P${printerName}",
-                    "-o raw",
                     tmpFile.absolutePath
                 )
             )
