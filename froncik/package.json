@@ -10,8 +10,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.188",
     "@types/react-file-reader-input": "^2.0.1",
     "bootstrap": "^5.2.2",
+    "lodash": "^4.17.21",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
