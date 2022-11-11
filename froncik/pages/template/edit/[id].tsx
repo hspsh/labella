@@ -16,10 +16,17 @@ export default function Edit() {
     <TemplateForm
       submitText="Aktualizuj"
       submitCallback={(template) => {
-        API.templates.update(id, template.name, template.template, template.type);
+        API.templates.update(
+          id,
+          template.name,
+          template.template,
+          template.type
+        );
       }}
     />
   );
 
-  return <FormWithPreview form={form} />;
+  return (
+    <FormWithPreview form={form} previewSrc={API.templates.previewSrc(id)} />
+  );
 }
