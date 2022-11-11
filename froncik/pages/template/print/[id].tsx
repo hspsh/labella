@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
+import debounce from "lodash/debounce";
 
 import TemplatePrintForm from "../../../components/TemplatePrintForm";
 import FormWithPreview from "../../../components/FormWithPreview";
@@ -10,15 +11,23 @@ type QueryParams = {
 };
 
 type Props = {};
+const debounceDelay = 400; //ms
 
 export default function Print({}: Props) {
   const router = useRouter();
   const id = parseInt((router.query as QueryParams).id);
   const [attributes, setAttributes] = useState<string[]>([]);
-  const [fields, setFields] = useState<Record<string, string>>({});
+  const [previewSrc, setPreviewSrc] = useState("");
 
-  const formChangeHandler = (newFields: Record<string, string>) => {
-    setFields(newFields);
+  const updatePreview = useCallback(
+    debounce((id: number, fields: Record<string, string>) => {
+      setPreviewSrc(API.labels.previewSrc(id, fields));
+    }, debounceDelay),
+    []
+  );
+
+  const formChangeHandler = (fields: Record<string, string>) => {
+    updatePreview(id, fields);
   };
 
   useEffect(() => {
@@ -37,10 +46,5 @@ export default function Print({}: Props) {
     />
   );
 
-  return (
-    <FormWithPreview
-      form={form}
-      previewSrc={API.labels.previewSrc(id, fields)}
-    />
-  );
+  return <FormWithPreview form={form} previewSrc={previewSrc} />;
 }
