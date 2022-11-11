@@ -6,7 +6,7 @@ import API from "../../lib/api";
 type Props = {};
 
 export default function Add({}: Props) {
-  const form = (
+  return (
     <TemplateForm
       submitText="Dodaj"
       submitCallback={(template) => {
@@ -14,6 +14,4 @@ export default function Add({}: Props) {
       }}
     />
   );
-
-  return <FormWithPreview form={form} />;
 }
