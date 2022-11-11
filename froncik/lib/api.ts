@@ -79,12 +79,10 @@ const API = {
   },
   labels: {
     previewSrc(id: number, fields: Record<string, string>) {
-      let queryString = "";
-
-      for (const key in fields) {
-        const val = fields[key];
-        queryString += `${encodeURI(key)}=${encodeURI(val)}`;
-      }
+    const queryString = Object.entries(fields)
+        .map(([key, value]) =>
+            `${encodeURI(key)}=${encodeURI(value)}`
+        ).join("&")
 
       return `${API_PATH}/templates/${id}/preview?${queryString}`;
     },
