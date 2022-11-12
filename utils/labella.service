@@ -1,0 +1,13 @@
+# To deploy, copy to /etc/systemd/system, run systemctl daemon-reload and then systemctl enable --now labella.service
+# The default path for the jar file and the db is /home/pi/labella, edit at your own discretion.
+[Unit]
+Description=labella application
+
+[Service]
+WorkingDirectory=/home/pi/labella
+ExecStart=/usr/bin/java -DprinterName=Zebra_LP2824 -Dspring.datasource.url=jdbc:h2:file:./db -Dserver.port=80 -Xmx256M -jar /home/pi/labella/app.jar
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
