@@ -1,7 +1,7 @@
 # To deploy, copy to /etc/systemd/system, run systemctl daemon-reload and then systemctl enable --now labella.service
 # The default path for the jar file and the db is /home/pi/labella, edit at your own discretion.
 [Unit]
-Description=Labella backend
+Description=labella application
 
 [Service]
 WorkingDirectory=/home/pi/labella
