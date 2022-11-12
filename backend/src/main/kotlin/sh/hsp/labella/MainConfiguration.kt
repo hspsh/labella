@@ -60,7 +60,7 @@ class MainConfiguration {
 
 
     @Bean
-    fun languagePrintingService(
+    fun printingService(
         languagePrinterService: LanguagePrinterService,
         imageToLanguage: ImageToLanguage,
         templateService: TemplateService,

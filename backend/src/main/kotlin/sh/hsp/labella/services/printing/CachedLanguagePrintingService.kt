@@ -10,7 +10,9 @@ import sh.hsp.labella.model.Template
 @RepositoryEventHandler
 class CachedLanguagePrintingService(val printingService: PrintingService) : PrintingService {
     val cache: ConcurrentLruCache<Long, RenderingOutput> =
-        ConcurrentLruCache(100) { id -> printingService.preview(id, emptyMap()) }
+        ConcurrentLruCache(100) { id ->
+            printingService.preview(id, emptyMap())
+        }
 
     override fun print(templateId: Long, fields: Map<String, String>) {
         printingService.print(templateId, fields)
