@@ -2,18 +2,18 @@ package sh.hsp.labella.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import sh.hsp.labella.services.printing.LanguagePrintingService
+import sh.hsp.labella.services.printing.PrintingService
 
 @RestController
 @RequestMapping(path = ["/api/templates/{templateId}/print"])
-@CrossOrigin(origins = ["*"] )
+@CrossOrigin(origins = ["*"])
 class PrintingController(
-    val languagePrintingService: LanguagePrintingService
+    val printingService: PrintingService
 ) {
     @PostMapping
     @ResponseStatus(code = HttpStatus.OK)
     fun printSvg(@PathVariable templateId: Long, @RequestBody printDTO: PrintDTO) {
-        languagePrintingService.print(templateId, printDTO.fields)
+        printingService.print(templateId, printDTO.fields)
     }
 }
 

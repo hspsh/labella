@@ -7,13 +7,14 @@ import org.springframework.http.converter.BufferedImageHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
 import sh.hsp.labella.controller.TemplateRepository
 import sh.hsp.labella.services.printer.LanguagePrinterService
-import sh.hsp.labella.services.printer.LanguagePrinterServiceImpl
 import sh.hsp.labella.services.printer.LpCliLanguagePrinterService
 import sh.hsp.labella.services.printer.converter.ImageToLanguage
 import sh.hsp.labella.services.printer.converter.ImageToLanguageImpl
 import sh.hsp.labella.services.printer.converter.mono.SimpleImageToMono
 import sh.hsp.labella.services.printer.converter.zebra.MonoToEpl
+import sh.hsp.labella.services.printing.CachedLanguagePrintingService
 import sh.hsp.labella.services.printing.LanguagePrintingService
+import sh.hsp.labella.services.printing.PrintingService
 import sh.hsp.labella.services.renderer.InkscapeRendererService
 import sh.hsp.labella.services.renderer.RendererService
 import sh.hsp.labella.services.svg.SvgSizeExtractor
@@ -57,6 +58,7 @@ class MainConfiguration {
     fun svgSizeExtractor() =
         SvgSizeExtractorImpl()
 
+
     @Bean
     fun languagePrintingService(
         languagePrinterService: LanguagePrinterService,
@@ -65,14 +67,16 @@ class MainConfiguration {
         svgSizeExtractor: SvgSizeExtractor,
         rendererService: RendererService,
         templateRepository: TemplateRepository
-    ) =
-        LanguagePrintingService(
-            templateService,
-            svgSizeExtractor,
-            rendererService,
-            imageToLanguage,
-            languagePrinterService,
-            templateRepository
+    ): PrintingService =
+        CachedLanguagePrintingService(
+            LanguagePrintingService(
+                templateService,
+                svgSizeExtractor,
+                rendererService,
+                imageToLanguage,
+                languagePrinterService,
+                templateRepository
+            )
         )
 
     @Bean
