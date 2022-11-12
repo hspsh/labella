@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.BufferedImageHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.web.filter.ShallowEtagHeaderFilter
 import sh.hsp.labella.controller.TemplateRepository
 import sh.hsp.labella.services.printer.LanguagePrinterService
 import sh.hsp.labella.services.printer.LpCliLanguagePrinterService
@@ -23,6 +24,7 @@ import sh.hsp.labella.services.template.SimpleTemplateService
 import sh.hsp.labella.services.template.TemplateService
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
 import java.awt.image.BufferedImage
+import javax.servlet.Filter
 
 
 @Configuration
@@ -58,6 +60,10 @@ class MainConfiguration {
     fun svgSizeExtractor() =
         SvgSizeExtractorImpl()
 
+    @Bean
+    fun shallowEtagHeaderFilter(): Filter? {
+        return ShallowEtagHeaderFilter()
+    }
 
     @Bean
     fun printingService(
