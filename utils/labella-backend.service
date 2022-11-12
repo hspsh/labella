@@ -2,6 +2,7 @@
 Description=Labella backend
 
 [Service]
+WorkingDirectory=/home/pi/labella
 ExecStart=/usr/bin/java -DprinterName=Zebra_LP2824 -Dspring.datasource.url=jdbc:h2:file:./db -Dserver.port=80 -Xmx256M -jar /home/pi/labella/app.jar
 User=root
 Group=root
