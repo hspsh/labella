@@ -16,6 +16,6 @@ class MonoToEpl : MonoToLanguage {
 
         return buffer.toByteArray()
     }
-
-    private fun String.bytes(): List<Byte> = this.toByteArray(Charset.forName("ASCII")).asList()
 }
+
+fun String.bytes(): List<Byte> = this.toByteArray(Charset.forName("ASCII")).asList()
