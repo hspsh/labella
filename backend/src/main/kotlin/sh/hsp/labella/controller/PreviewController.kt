@@ -1,6 +1,7 @@
 package sh.hsp.labella.controller
 
 import org.springframework.web.bind.annotation.*
+import sh.hsp.labella.services.previewing.PreviewingService
 import sh.hsp.labella.services.printing.PrintingService
 import java.awt.image.BufferedImage
 
@@ -8,7 +9,7 @@ import java.awt.image.BufferedImage
 @CrossOrigin(origins = ["*"])
 @RequestMapping(path = ["/api/templates/{templateId}/preview"])
 class PreviewController(
-    val printingService: PrintingService
+    val printingService: PreviewingService
 ) {
     @GetMapping(produces = ["image/png"])
     fun preview(@PathVariable templateId: Long, @RequestParam fields: Map<String, String>): BufferedImage {
