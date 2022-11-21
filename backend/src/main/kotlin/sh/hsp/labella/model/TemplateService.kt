@@ -1,4 +1,4 @@
-package sh.hsp.labella.services.template
+package sh.hsp.labella.model
 
 interface TemplateService {
     fun render(templateContents: String, fields: Map<String, String>): String

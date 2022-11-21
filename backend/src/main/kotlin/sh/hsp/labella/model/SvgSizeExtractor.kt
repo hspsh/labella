@@ -1,4 +1,4 @@
-package sh.hsp.labella.services.svg
+package sh.hsp.labella.model
 
 import sh.hsp.labella.model.PrintDimensions
 

@@ -1,6 +1,7 @@
 package sh.hsp.labella.services.renderer
 
 import com.sun.istack.logging.Logger
+import sh.hsp.labella.model.RendererService
 import sh.hsp.labella.model.RenderingInput
 import sh.hsp.labella.model.RenderingOutput
 import java.io.File

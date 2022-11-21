@@ -2,7 +2,7 @@ package sh.hsp.labella.services.templating
 
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import sh.hsp.labella.controller.TemplateRepository
-import sh.hsp.labella.services.template.TemplateService
+import sh.hsp.labella.model.TemplateService
 
 class TemplatingServiceImpl(
     val templateRepository: TemplateRepository,

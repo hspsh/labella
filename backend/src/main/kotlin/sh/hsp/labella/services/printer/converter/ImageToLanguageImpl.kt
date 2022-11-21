@@ -1,5 +1,6 @@
 package sh.hsp.labella.services.printer.converter
 
+import sh.hsp.labella.model.ImageToLanguage
 import sh.hsp.labella.services.printer.converter.mono.ImageToMono
 import sh.hsp.labella.services.printer.converter.zebra.MonoToLanguage
 import java.awt.image.BufferedImage

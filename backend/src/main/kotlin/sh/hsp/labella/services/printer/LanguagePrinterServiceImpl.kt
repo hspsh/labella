@@ -1,5 +1,6 @@
 package sh.hsp.labella.services.printer
 
+import sh.hsp.labella.model.LanguagePrinterService
 import javax.print.DocFlavor
 import javax.print.PrintService
 import javax.print.PrintServiceLookup

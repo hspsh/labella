@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.http.HttpStatus
 import sh.hsp.labella.model.Template
-import sh.hsp.labella.services.printer.LanguagePrinterService
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
 

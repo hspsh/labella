@@ -3,6 +3,7 @@ package sh.hsp.labella.services.renderer
 import org.im4java.core.ConvertCmd
 import org.im4java.core.IMOperation
 import org.im4java.process.Pipe
+import sh.hsp.labella.model.RendererService
 import sh.hsp.labella.model.RenderingInput
 import sh.hsp.labella.model.RenderingOutput
 import java.awt.image.BufferedImage

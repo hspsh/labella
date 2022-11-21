@@ -3,8 +3,6 @@ package sh.hsp.labella.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.awt.image.BufferedImage
 import java.util.*
-import java.util.function.BiFunction
-import java.util.function.Consumer
 import java.util.function.Function
 import javax.persistence.*
 
@@ -47,19 +45,17 @@ class Template {
 
     fun render(
         fields: Map<String, String>?,
-        templateService: BiFunction<String, Map<String, String>, String>,
-        svgSizeExtractor: Function<String, PrintDimensions?>,
-        renderer: Function<RenderingInput, RenderingOutput>
+        templateService: TemplateService,
+        svgSizeExtractor: SvgSizeExtractor,
+        renderer: RendererService
     ): RenderingOutput {
         if (type != TemplateType.SVG) {
             throw UnsupportedOperationException()
         }
 
-        val templated = templateService.apply(template, fields ?: emptyMap())
-
-        val printDimensions = svgSizeExtractor.apply(templated) ?: PrintDimensions.ORANGE_LABEL
-
-        return renderer.apply(RenderingInput.SVGRenderingInput(templated, printDimensions))
+        val templated = templateService.render(template, fields ?: emptyMap())
+        val printDimensions = svgSizeExtractor.extract(templated) ?: PrintDimensions.ORANGE_LABEL
+        return renderer.render(RenderingInput.SVGRenderingInput(templated, printDimensions))
     }
 
     fun fields(fieldExtractor: Function<String, List<String>>): List<String> =
@@ -79,11 +75,11 @@ data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
 
 data class RenderingOutput(val image: BufferedImage) {
     fun printViaLanguage(
-        imageToLanguageConverter: Function<BufferedImage, ByteArray>,
-        languagePrinter: Consumer<ByteArray>
+        imageToLanguageConverter: ImageToLanguage,
+        languagePrinter: LanguagePrinterService
     ) {
-        val language = imageToLanguageConverter.apply(image)
-        languagePrinter.accept(language)
+        val language = imageToLanguageConverter.convert(image)
+        languagePrinter.print(language)
     }
 }
 

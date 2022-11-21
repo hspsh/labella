@@ -1,4 +1,4 @@
-package sh.hsp.labella.services.printer
+package sh.hsp.labella.model
 
 interface LanguagePrinterService {
     fun print(language: ByteArray): Unit

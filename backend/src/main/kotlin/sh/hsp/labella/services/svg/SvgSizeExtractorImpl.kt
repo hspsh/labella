@@ -1,7 +1,7 @@
 package sh.hsp.labella.services.svg
 
 import sh.hsp.labella.model.PrintDimensions
-import java.io.InputStreamReader
+import sh.hsp.labella.model.SvgSizeExtractor
 import javax.xml.parsers.DocumentBuilderFactory
 
 class SvgSizeExtractorImpl : SvgSizeExtractor {
