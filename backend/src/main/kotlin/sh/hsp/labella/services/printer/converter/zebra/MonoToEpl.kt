@@ -9,7 +9,6 @@ class MonoToEpl : MonoToLanguage {
 
         buffer.addAll("N\n".bytes())
         buffer.addAll("q${mono.width}\n".bytes())
-        buffer.addAll("Q${mono.height}\n".bytes())
         buffer.addAll("GW0,0,${mono.width / 8},${mono.height}\n".bytes())
         buffer.addAll(mono.bitSet.toByteArray().asList())
         buffer.addAll("\nP1\n".bytes())
