@@ -2,10 +2,22 @@ import Template, { TemplateType } from "../common/Template";
 
 const API_PATH = process.env.NEXT_PUBLIC_API_PATH || "/api";
 
+const myFetch = (
+  input: RequestInfo | URL,
+  init?: RequestInit
+): Promise<Response> => {
+  return fetch(input, {
+    mode: "cors",
+    credentials: "same-origin",
+
+    ...init,
+  });
+};
+
 const API = {
   templates: {
     list(): Promise<Template[]> {
-      return fetch(`${API_PATH}/templates`)
+      return myFetch(`${API_PATH}/templates`)
         .then((req) => req.json())
         .then((data) => data._embedded.templates as Template[]);
     },
@@ -15,7 +27,7 @@ const API = {
       type: TemplateType
     ): Promise<Template> {
       const typeStr: String = TemplateType[type];
-      return fetch(`${API_PATH}/templates`, {
+      return myFetch(`${API_PATH}/templates`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +40,7 @@ const API = {
       }).then((req) => req.json());
     },
     read(id: number): Promise<Template> {
-      return fetch(`${API_PATH}/templates/${id}`, {
+      return myFetch(`${API_PATH}/templates/${id}`, {
         method: "GET",
       }).then((req) => req.json());
     },
@@ -39,8 +51,9 @@ const API = {
       type: TemplateType
     ): Promise<Template> {
       const typeStr: String = TemplateType[type];
-      return fetch(`${API_PATH}/templates/${id}`, {
-        method: "PATH",
+
+      return myFetch(`${API_PATH}/templates/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,17 +65,17 @@ const API = {
       }).then((req) => req.json());
     },
     delete(id: number) {
-      return fetch(`${API_PATH}/templates/${id}`, {
+      return myFetch(`${API_PATH}/templates/${id}`, {
         method: "DELETE",
       });
     },
     attributes(id: number): Promise<string[]> {
-      return fetch(`${API_PATH}/templates/${id}/attributes`)
+      return myFetch(`${API_PATH}/templates/${id}/attributes`)
         .then((res) => res.json())
         .then((data) => data.fields);
     },
     print(id: number, attributes: Record<string, string>) {
-      return fetch(`${API_PATH}/templates/${id}/print`, {
+      return myFetch(`${API_PATH}/templates/${id}/print`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
