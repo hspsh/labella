@@ -6,7 +6,7 @@ FROM openjdk:17-jdk-alpine
 RUN apk --update add inkscape
 
 ADD ./backend/ .
-COPY --from=0 out/* src/main/resources/static/
+COPY --from=0 out/ src/main/resources/static/
 RUN ./mvnw package
 
 FROM openjdk:17-jdk-alpine as labella
