@@ -6,6 +6,7 @@ npm run export
 popd
 
 rm -rf backend/src/main/resources/static/*
+mkdir backend/src/main/resources/static/
 cp -R ./froncik/out/* backend/src/main/resources/static/
 
 pushd backend

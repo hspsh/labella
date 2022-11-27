@@ -7,7 +7,6 @@ import org.springframework.http.converter.BufferedImageHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.filter.ShallowEtagHeaderFilter
 import sh.hsp.labella.controller.TemplateRepository
-import sh.hsp.labella.infra.NextJSFilter
 import sh.hsp.labella.model.*
 import sh.hsp.labella.services.previewing.CachedPreviewingService
 import sh.hsp.labella.services.previewing.LanguagePreviewingService
