@@ -23,7 +23,7 @@ export default function TemplateCard({ template }: Props) {
       style={{ minWidth: "18rem" }}
       className="mb-2"
     >
-      <Card.Header>{template.name}</Card.Header>
+      <Card.Header><a href={`./api/templates/${template.id}/download`}>{template.name}</a></Card.Header>
       <Stack direction="horizontal">
         <div style={{ display: "inline-table" }}>
           <Card.Img
