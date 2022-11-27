@@ -40,14 +40,14 @@ const API = {
     ): Promise<Template> {
       const typeStr: String = TemplateType[type];
       return fetch(`${API_PATH}/templates/${id}`, {
-        method: "PUT",
+        method: "PATH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
-          template: content,
-          type: typeStr,
+          name: name || undefined,
+          template: content || undefined,
+          type: typeStr || undefined,
         }),
       }).then((req) => req.json());
     },
