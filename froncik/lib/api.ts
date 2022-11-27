@@ -1,6 +1,6 @@
 import Template, { TemplateType } from "../common/Template";
 
-const API_PATH = "/api";
+const API_PATH = process.env.NEXT_PUBLIC_API_PATH || "/api";
 
 const API = {
   templates: {
@@ -79,10 +79,9 @@ const API = {
   },
   labels: {
     previewSrc(id: number, fields: Record<string, string>) {
-    const queryString = Object.entries(fields)
-        .map(([key, value]) =>
-            `${encodeURI(key)}=${encodeURI(value)}`
-        ).join("&")
+      const queryString = Object.entries(fields)
+        .map(([key, value]) => `${encodeURI(key)}=${encodeURI(value)}`)
+        .join("&");
 
       return `${API_PATH}/templates/${id}/preview?${queryString}`;
     },
