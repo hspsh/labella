@@ -3,7 +3,7 @@ package sh.hsp.labella.services.template
 import sh.hsp.labella.model.TemplateService
 
 class SimpleTemplateService : TemplateService {
-    val variableRegex = Regex("""${'\\'}${'$'}\{([a-zA-Z]+)\}""")
+    val variableRegex = Regex("""${'\\'}${'$'}\{([a-zA-Z0-9]+)\}""")
     override fun render(templateContents: String, fields: Map<String, String>): String =
         variableRegex.replace(templateContents) { match ->
             fields.getOrDefault(
