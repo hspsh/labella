@@ -1,15 +1,15 @@
 # QUICKSTART
 Just use docker, not sure though if it will work.
-Your printer has to be named `printerName=EPL1_EPL1_Label_Printer`.
 
-To build: `docker build . -t labella`.
-To run: `docker run --net=host labella`.
+To build: `docker build . -t labella`.  
+To run: ```docker run -v PRINTER_NAME=ZEBRA_NAME_IN_CUPS --net=host -v "`pwd`/data:/data" labella```.
 
 # Developer start
 You should just run it as a normal java developer.  
 You are not? Lol, use `mvn spring-boot:run -DprinterName=ZebraCups`.  
 Change the `-DprinterName=???` variable to the printer name in your CUPS or something.  
-See the code in LanguagePrinterServiceImpl if it ain't working, lol.
+See the code in LpCliLanguagePrinterService if it ain't working, lol.
+Prolly need Inkscape, lp and whatsnot, errors will guide you gl;hf.
 
 ## Development
 
@@ -26,4 +26,5 @@ The more you know Spring the better.
 ## Production
 
 If you are running it outside the docker, then please run:
-`java -Dspring.datasource.url=jdbc:h2:file:/path/to/labella/db -Dserver.port=8080 -jar app.jar"
+`java -Dspring.datasource.url=jdbc:h2:file:/path/to/labella/db -DprinterName=??? -Dserver.port=8080 -jar app.jar`
+Best build by gettobuild.sh, it will build also frontend.
