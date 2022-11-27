@@ -3,6 +3,7 @@ package sh.hsp.labella.services.svg
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import sh.hsp.labella.model.PrintDimensions
+import sh.hsp.labella.services.svg.size.SvgSizeExtractorImpl
 
 class SvgSizeExtractorImplTest {
     @Test

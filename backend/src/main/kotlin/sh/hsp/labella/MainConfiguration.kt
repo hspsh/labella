@@ -17,8 +17,11 @@ import sh.hsp.labella.services.printer.converter.mono.SimpleImageToMono
 import sh.hsp.labella.services.printer.converter.zebra.MonoToEpl
 import sh.hsp.labella.services.printing.LanguagePrintingService
 import sh.hsp.labella.services.printing.PrintingService
+import sh.hsp.labella.services.renderer.FlavorAwareRenderingService
 import sh.hsp.labella.services.renderer.InkscapeRendererService
-import sh.hsp.labella.services.svg.SvgSizeExtractorImpl
+import sh.hsp.labella.services.svg.flavor.SVGFlavor
+import sh.hsp.labella.services.svg.flavor.flavors.QRCodeFlavor
+import sh.hsp.labella.services.svg.size.SvgSizeExtractorImpl
 import sh.hsp.labella.services.template.SimpleTemplateService
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
 import java.awt.image.BufferedImage
@@ -35,7 +38,11 @@ class MainConfiguration {
 
     @Bean
     fun rendererService(): RendererService {
-        return InkscapeRendererService()
+        return FlavorAwareRenderingService(
+            InkscapeRendererService(), listOf<SVGFlavor>(
+                QRCodeFlavor()
+            )
+        )
     }
 
     @Bean
