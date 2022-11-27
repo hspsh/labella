@@ -7,8 +7,9 @@ import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletRequestWrapper
 
-class NextJSFilter : Filter {
-    override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
+
+class NextJSFilter {
+    fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         if (request !is HttpServletRequest) {
             chain?.doFilter(request, response)
         }
@@ -26,7 +27,7 @@ class NextJSFilter : Filter {
             -> chain?.doFilter(request, response)
 
             else -> {
-                chain?.doFilter(request, response)
+                request.getRequestDispatcher("/").forward(request, response);
             }
         }
 
