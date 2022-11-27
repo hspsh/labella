@@ -5,7 +5,9 @@ import com.google.zxing.Dimension
 import com.google.zxing.EncodeHintType
 import com.google.zxing.client.j2se.MatrixToImageConfig
 import com.google.zxing.client.j2se.MatrixToImageWriter
+import com.google.zxing.pdf417.decoder.ec.ErrorCorrection
 import com.google.zxing.qrcode.QRCodeWriter
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import sh.hsp.labella.services.svg.flavor.RewritingCodeFlavor
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
@@ -27,7 +29,10 @@ fun toQR(str: String, dim: Dimension): BufferedImage? {
     val qrCodeWriter = QRCodeWriter()
     val encoded = qrCodeWriter.encode(
         str, BarcodeFormat.QR_CODE, dim.width, dim.height,
-        mapOf(Pair(EncodeHintType.MARGIN, 0))
+        mapOf(
+            Pair(EncodeHintType.MARGIN, 0),
+            Pair(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q)
+        )
     )
     return MatrixToImageWriter.toBufferedImage(encoded, MatrixToImageConfig())
 }

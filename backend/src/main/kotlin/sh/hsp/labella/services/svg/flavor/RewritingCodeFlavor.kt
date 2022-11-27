@@ -27,13 +27,13 @@ abstract class RewritingCodeFlavor(forEachMatchedByXPath: String, val modify: Co
     companion object{
         var xFactory: XPathFactory = XPathFactory.newInstance()
         var xPath: XPath = xFactory.newXPath()
-        val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
     }
 
     val xExpression = xPath.compile(forEachMatchedByXPath)
 
     override fun flavor(svg: String): String {
 
+        val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
         val doc = documentBuilder.parse(svg.byteInputStream())
         val nodeList = xExpression.evaluate(doc, XPathConstants.NODESET) as NodeList
 
