@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card, Stack, Button, ButtonGroup } from "react-bootstrap";
+import { Card, Stack, Button, ButtonGroup, Dropdown } from "react-bootstrap";
 
 import routes from "../lib/routes";
 import Template from "../common/Template";
@@ -23,7 +23,21 @@ export default function TemplateCard({ template }: Props) {
       style={{ minWidth: "18rem" }}
       className="mb-2"
     >
-      <Card.Header><a href={`./api/templates/${template.id}/download`}>{template.name}</a></Card.Header>
+      <Card.Header>
+        <Stack direction="horizontal" gap={3}>
+          <h4>{template.name}</h4>
+          <Dropdown className="ms-auto">
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item href={`./api/templates/${template.id}/download`}>Pobierz</Dropdown.Item>
+              <Dropdown.Item href={routes.edit(template.id)}>Edytuj</Dropdown.Item>
+              <Dropdown.Item variant="danger" onClick={() => API.templates.delete(template.id)}>Usuń</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Stack>
+      </Card.Header>
       <Stack direction="horizontal">
         <div style={{ display: "inline-table" }}>
           <Card.Img
@@ -40,15 +54,6 @@ export default function TemplateCard({ template }: Props) {
             style={{ height: "100%" }}
             className="side-btns"
           >
-            <Button
-              style={buttonStyle}
-              onClick={() => API.templates.delete(template.id)}
-            >
-              Usuń
-            </Button>
-            <Link href={routes.edit(template.id)} passHref legacyBehavior>
-              <Button style={buttonStyle}>Edytuj</Button>
-            </Link>
             <Link href={routes.print(template.id)} passHref legacyBehavior>
               <Button style={buttonStyle}>Drukuj</Button>
             </Link>
