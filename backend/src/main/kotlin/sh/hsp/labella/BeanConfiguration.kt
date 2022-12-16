@@ -34,7 +34,7 @@ import javax.servlet.Filter
 
 
 @Configuration
-class MainConfiguration {
+class BeanConfiguration {
 
     @Bean
     fun templateService(): TemplateService {
@@ -66,16 +66,8 @@ class MainConfiguration {
     }
 
     @Bean
-    fun bufferedImageHttpMessageConverter(): HttpMessageConverter<BufferedImage> = BufferedImageHttpMessageConverter()
-
-    @Bean
     fun svgSizeExtractor() =
         SvgSizeExtractorImpl()
-
-    @Bean
-    fun shallowEtagHeaderFilter(): Filter? {
-        return ShallowEtagHeaderFilter()
-    }
 
     @Bean
     fun printingService(
@@ -111,16 +103,5 @@ class MainConfiguration {
         templateService: TemplateService
     ): TemplatingServiceImpl {
         return TemplatingServiceImpl(templateRepository, templateService)
-    }
-
-    @Bean
-    fun mappingJackson2HttpMessageConverter(): MappingJackson2HttpMessageConverter {
-        return MappingJackson2HttpMessageConverter(
-            Jackson2ObjectMapperBuilder
-                .json()
-                .serializers(BufferedImageSerializer())
-                .deserializers(BufferedImageDeserializer())
-                .build()
-        )
     }
 }
