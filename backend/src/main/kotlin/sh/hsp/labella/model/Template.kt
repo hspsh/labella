@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.awt.image.BufferedImage
 import java.util.*
 import java.util.function.Function
+import javax.annotation.PostConstruct
 import javax.persistence.*
 
 @Entity

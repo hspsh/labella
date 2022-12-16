@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class SimpleTemplateServiceTest {
     val simpleTemplateService = SimpleTemplateService()
-    val SAMPLE_TEMPLATE = """Hello, ${'$'}{MOMA} is ${'$'}{ROMA}"""
+    val SAMPLE_TEMPLATE = """Hello, {{MOMA}} is {{ROMA}}"""
 
     @Test
     fun testListFields() {

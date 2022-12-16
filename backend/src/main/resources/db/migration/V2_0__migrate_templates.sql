@@ -1,0 +1,1 @@
+UPDATE templates SET template = REGEXP_REPLACE(template, '\$\{([a-zA-Z0-9]+)\}', '{{$1}}', 'm');

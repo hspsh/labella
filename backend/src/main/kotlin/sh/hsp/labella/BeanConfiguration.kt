@@ -27,6 +27,7 @@ import sh.hsp.labella.services.renderer.svg.MultipleSVGRenderingServiceImpl
 import sh.hsp.labella.services.svg.flavor.SVGFlavor
 import sh.hsp.labella.services.svg.flavor.flavors.QRCodeFlavor
 import sh.hsp.labella.services.svg.size.SvgSizeExtractorImpl
+import sh.hsp.labella.services.template.JinjaTemplateService
 import sh.hsp.labella.services.template.SimpleTemplateService
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
 import java.awt.image.BufferedImage
@@ -38,7 +39,7 @@ class BeanConfiguration {
 
     @Bean
     fun templateService(): TemplateService {
-        return SimpleTemplateService()
+        return JinjaTemplateService()
     }
 
     @Bean
