@@ -29,6 +29,7 @@ import sh.hsp.labella.services.svg.flavor.flavors.QRCodeFlavor
 import sh.hsp.labella.services.svg.size.SvgSizeExtractorImpl
 import sh.hsp.labella.services.template.JinjaTemplateService
 import sh.hsp.labella.services.template.SimpleTemplateService
+import sh.hsp.labella.services.templating.TemplatingService
 import sh.hsp.labella.services.templating.TemplatingServiceImpl
 import java.awt.image.BufferedImage
 import javax.servlet.Filter
@@ -84,17 +85,16 @@ class BeanConfiguration {
 
     @Bean
     fun previewingService(
-        templateService: TemplateService,
+        templatingService: TemplatingService,
         svgSizeExtractor: SvgSizeExtractor,
         multipleSVGRendererService: MultipleSVGRenderingService,
         templateRepository: TemplateRepository
     ): PreviewingService =
         CachedPreviewingService(
             LanguagePreviewingService(
-                templateService,
+                templatingService,
                 svgSizeExtractor,
                 multipleSVGRendererService,
-                templateRepository
             )
         )
 
@@ -102,7 +102,7 @@ class BeanConfiguration {
     fun templatingService(
         templateRepository: TemplateRepository,
         templateService: TemplateService
-    ): TemplatingServiceImpl {
+    ): TemplatingService {
         return TemplatingServiceImpl(templateRepository, templateService)
     }
 }

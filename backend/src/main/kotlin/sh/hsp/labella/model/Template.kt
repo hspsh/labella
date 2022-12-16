@@ -44,19 +44,15 @@ class Template {
         updated = Date()
     }
 
-    fun render(
+    fun template(
         fields: Map<String, String>?,
         templateService: TemplateService,
-        svgSizeExtractor: SvgSizeExtractor,
-        SVGRenderer: MultipleSVGRenderingService
-    ): List<RenderingOutput> {
+    ): Templated {
         if (type != TemplateType.SVG) {
             throw UnsupportedOperationException()
         }
 
-        val templated = templateService.render(template, fields ?: emptyMap())
-        val printDimensions = svgSizeExtractor.extract(templated) ?: PrintDimensions.ORANGE_LABEL
-        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(templated, printDimensions))
+        return Templated(templateService.render(template, fields ?: emptyMap()))
     }
 
     fun fields(fieldExtractor: Function<String, List<String>>): List<String> =
@@ -72,6 +68,17 @@ data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
     companion object {
         val ORANGE_LABEL = PrintDimensions(400, 240)
     }
+}
+
+data class Templated(val templated: String) {
+    fun render(
+        svgSizeExtractor: SvgSizeExtractor,
+        SVGRenderer: MultipleSVGRenderingService
+    ): List<RenderingOutput> {
+        val printDimensions = svgSizeExtractor.extract(templated) ?: PrintDimensions.ORANGE_LABEL
+        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(templated, printDimensions))
+    }
+
 }
 
 data class RenderingOutput(val image: BufferedImage) {
