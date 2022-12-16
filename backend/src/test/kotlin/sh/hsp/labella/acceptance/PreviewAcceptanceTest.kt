@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.http.HttpStatus
+import sh.hsp.labella.controller.PreviewController
+import sh.hsp.labella.controller.PreviewController.ImagesDTO
 import sh.hsp.labella.model.Template
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
@@ -31,6 +33,26 @@ class PreviewAcceptanceTest {
             rest.getForEntity(
                 "/api/templates/${id}/preview",
                 BufferedImage::class.java
+            )
+        Assertions.assertEquals(HttpStatus.OK, printingResponse.statusCode)
+        // Assertions.assertTrue(outputImage.imageEqual(outputImage.body!!))
+    }
+
+    @Test
+    fun whenTemplateIsAddedAndPreviewedAllThenSucceeds() {
+        val template = createTemplate()
+//        val outputImage =
+//            ImageIO.read(DefaultResourceLoader().getResource("sh/hsp/labella/acceptance/320x224.png").inputStream)
+
+        val templateResponse =
+            rest.postForEntity("/api/templates", template, IdOnly::class.java, emptyMap<String, String>())
+        val id = templateResponse.body!!.id
+        Assertions.assertEquals(HttpStatus.CREATED, templateResponse.statusCode)
+
+        val printingResponse =
+            rest.getForEntity(
+                "/api/templates/${id}/preview",
+                ImagesDTO::class.java
             )
         Assertions.assertEquals(HttpStatus.OK, printingResponse.statusCode)
         // Assertions.assertTrue(outputImage.imageEqual(outputImage.body!!))

@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import sh.hsp.labella.model.PrintDimensions
 import sh.hsp.labella.model.RenderingInput
+import sh.hsp.labella.services.renderer.svg.MagickRendererService
 import java.awt.image.BufferedImage
-import java.nio.Buffer
 import javax.imageio.ImageIO
 
-class MagickRendererServiceTest {
+class MagickSVGRendererServiceTest {
 
     @Test
     @Disabled("Two images do not match, no idea why")

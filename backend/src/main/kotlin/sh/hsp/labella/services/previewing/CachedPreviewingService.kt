@@ -9,14 +9,14 @@ import sh.hsp.labella.model.Template
 
 @RepositoryEventHandler
 class CachedPreviewingService(val previewingService: PreviewingService) : PreviewingService {
-    val cache: ConcurrentLruCache<Long, ConcurrentLruCache<Map<String, String>, RenderingOutput>> =
+    val cache: ConcurrentLruCache<Long, ConcurrentLruCache<Map<String, String>, List<RenderingOutput>>> =
         ConcurrentLruCache(100) { key ->
             ConcurrentLruCache(3) { fields ->
                 previewingService.preview(key, fields)
             }
         }
 
-    override fun preview(templateId: Long, fields: Map<String, String>): RenderingOutput {
+    override fun preview(templateId: Long, fields: Map<String, String>): List<RenderingOutput> {
         return cache.get(templateId).get(fields)
     }
 

@@ -12,6 +12,10 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.util.*
 import java.util.function.Consumer
+import java.util.function.Function
+import java.util.stream.Collectors
+import java.util.stream.IntStream
+import java.util.stream.Stream
 import javax.imageio.ImageIO
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.Transformer
@@ -21,10 +25,11 @@ import javax.xml.transform.stream.StreamResult
 import javax.xml.xpath.XPath
 import javax.xml.xpath.XPathConstants
 import javax.xml.xpath.XPathFactory
+import kotlin.streams.toList
 
 
 abstract class RewritingCodeFlavor(forEachMatchedByXPath: String, val modify: Consumer<Node>) : SVGFlavor {
-    companion object{
+    companion object {
         var xFactory: XPathFactory = XPathFactory.newInstance()
         var xPath: XPath = xFactory.newXPath()
     }
@@ -42,14 +47,9 @@ abstract class RewritingCodeFlavor(forEachMatchedByXPath: String, val modify: Co
             modify.accept(node)
         }
 
-        val tf: Transformer = TransformerFactory.newInstance().newTransformer()
-        val arr = ByteArrayOutputStream()
-        val source = DOMSource(doc)
-        val result = StreamResult(arr)
-        tf.transform(source, result)
-
-        return String(arr.toByteArray())
+        return doc.writeToString()
     }
+
 
     fun toQR(str: String, dim: Dimension): BufferedImage? {
         val qrCodeWriter = QRCodeWriter()
@@ -65,4 +65,22 @@ abstract class RewritingCodeFlavor(forEachMatchedByXPath: String, val modify: Co
         ImageIO.write(this, "png", arr)
         return String(Base64.getEncoder().encode(arr.toByteArray()))
     }
+}
+
+fun <T> NodeList.map(mapper: Function<Node, T>): List<T> {
+    return IntStream.range(0, this.length)
+        .mapToObj { this.item(it) }
+        .map(mapper)
+        .collect(Collectors.toList())
+}
+
+
+fun Node.writeToString(): String {
+    val tf: Transformer = TransformerFactory.newInstance().newTransformer()
+    val arr = ByteArrayOutputStream()
+    val source = DOMSource(this)
+    val result = StreamResult(arr)
+    tf.transform(source, result)
+
+    return String(arr.toByteArray())
 }

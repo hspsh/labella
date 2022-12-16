@@ -47,15 +47,15 @@ class Template {
         fields: Map<String, String>?,
         templateService: TemplateService,
         svgSizeExtractor: SvgSizeExtractor,
-        renderer: RendererService
-    ): RenderingOutput {
+        SVGRenderer: MultipleSVGRenderingService
+    ): List<RenderingOutput> {
         if (type != TemplateType.SVG) {
             throw UnsupportedOperationException()
         }
 
         val templated = templateService.render(template, fields ?: emptyMap())
         val printDimensions = svgSizeExtractor.extract(templated) ?: PrintDimensions.ORANGE_LABEL
-        return renderer.render(RenderingInput.SVGRenderingInput(templated, printDimensions))
+        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(templated, printDimensions))
     }
 
     fun fields(fieldExtractor: Function<String, List<String>>): List<String> =

@@ -11,9 +11,12 @@ class LanguagePrintingService(
 ) : PrintingService {
     override fun print(templateId: Long, fields: Map<String, String>) {
         previewingService.preview(templateId, fields)
-            .printViaLanguage(
-                imageToLanguage,
-                languagePrinterService
-            )
+            .forEach {
+                it.printViaLanguage(
+                    imageToLanguage,
+                    languagePrinterService
+                )
+            }
+
     }
 }

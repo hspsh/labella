@@ -1,13 +1,13 @@
-package sh.hsp.labella.services.renderer
+package sh.hsp.labella.services.renderer.svg
 
 import com.sun.istack.logging.Logger
-import sh.hsp.labella.model.RendererService
+import sh.hsp.labella.model.SVGRendererService
 import sh.hsp.labella.model.RenderingInput
 import sh.hsp.labella.model.RenderingOutput
 import java.io.File
 import javax.imageio.ImageIO
 
-class InkscapeRendererService : RendererService {
+class InkscapeRendererService : SVGRendererService {
     val logger = Logger.getLogger(InkscapeRendererService::class.java)
 
     constructor() {
@@ -16,13 +16,7 @@ class InkscapeRendererService : RendererService {
         }
     }
 
-    override fun render(renderingInput: RenderingInput): RenderingOutput =
-        when (renderingInput) {
-            is RenderingInput.SVGRenderingInput -> renderSvg(renderingInput)
-            is RenderingInput.MdRenderingInput -> throw UnsupportedOperationException("Markdown not supported yet")
-        }
-
-    fun renderSvg(renderingInput: RenderingInput.SVGRenderingInput): RenderingOutput {
+    override fun render(renderingInput: RenderingInput.SVGRenderingInput): RenderingOutput {
         val inputFile = File.createTempFile("labella", ".svg")
         inputFile.writeText(renderingInput.content)
 
