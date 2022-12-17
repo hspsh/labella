@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.awt.image.BufferedImage
 import java.util.*
 import java.util.function.Function
-import javax.annotation.PostConstruct
 import javax.persistence.*
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 @Entity
 @Table(name = "templates")
@@ -64,21 +65,31 @@ class Template {
     }
 }
 
-data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
-    companion object {
-        val ORANGE_LABEL = PrintDimensions(400, 240)
-    }
-}
-
 data class Templated(val templated: String) {
+    val DEFAULT_LABEL_SIZE = PrintDimensions.ORANGE_LABEL
+
     fun render(
         svgSizeExtractor: SvgSizeExtractor,
+        labelSizeProvider: LabelSizeProvider,
         SVGRenderer: MultipleSVGRenderingService
     ): List<RenderingOutput> {
-        val printDimensions = svgSizeExtractor.extract(templated) ?: PrintDimensions.ORANGE_LABEL
-        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(templated, printDimensions))
+        val svgDimensions = svgSizeExtractor.extract(templated) ?: DEFAULT_LABEL_SIZE
+        val labelSize = labelSizeProvider.provideLabelSize(svgDimensions)
+        val toRenderDimensions = svgDimensions.rescale(labelSize)
+        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(templated, toRenderDimensions))
     }
 
+    fun PrintDimensions.rescale(to: PrintDimensions): PrintDimensions {
+        val xScale = to.xInPixels.toFloat() / this.xInPixels
+        val yScale = to.yInPixel.toFloat() / this.yInPixel
+
+        val scale = min(xScale, yScale)
+
+        return PrintDimensions(
+            (this.xInPixels * scale).roundToInt(),
+            (this.yInPixel * scale).roundToInt()
+        )
+    }
 }
 
 data class RenderingOutput(val image: BufferedImage) {
@@ -93,5 +104,10 @@ data class RenderingOutput(val image: BufferedImage) {
 
 sealed class RenderingInput {
     data class SVGRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
-    data class MdRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
+}
+
+data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
+    companion object {
+        val ORANGE_LABEL = PrintDimensions(400, 240)
+    }
 }

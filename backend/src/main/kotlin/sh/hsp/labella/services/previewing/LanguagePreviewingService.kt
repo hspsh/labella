@@ -9,6 +9,7 @@ class LanguagePreviewingService(
     val templateService: TemplatingService,
     val svgSizeExtractor: SvgSizeExtractor,
     val SVGRendererService: MultipleSVGRenderingService,
+    val labelSizeProvider: LabelSizeProvider
 ) : PreviewingService {
 
     override fun preview(templateId: Long, fields: Map<String, String>): List<RenderingOutput> {
@@ -16,6 +17,7 @@ class LanguagePreviewingService(
             templateService.template(templateId, fields).templated
                 .render(
                     svgSizeExtractor,
+                    labelSizeProvider,
                     SVGRendererService
                 )
 

@@ -19,7 +19,7 @@ class SimpleImageToMono : ImageToMono {
         val blackImage = image.convertToBlackAndWhite()
 
         for (y in 0 until realY) {
-            for (x in 0 until realX) {
+            for (x in 0 until image.width) {
                 if (blackImage.getRGB(x, y) == -1) bitSet.set(y * realX + x.inverse())
             }
         }

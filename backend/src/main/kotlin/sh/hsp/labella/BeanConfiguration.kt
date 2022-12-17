@@ -3,6 +3,7 @@ package sh.hsp.labella
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.http.converter.BufferedImageHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
@@ -12,6 +13,8 @@ import sh.hsp.labella.controller.TemplateRepository
 import sh.hsp.labella.infra.BufferedImageDeserializer
 import sh.hsp.labella.infra.BufferedImageSerializer
 import sh.hsp.labella.model.*
+import sh.hsp.labella.services.label.FixedLabelSizeProvider
+import sh.hsp.labella.services.label.SimpleLabelSizeProvider
 import sh.hsp.labella.services.previewing.CachedPreviewingService
 import sh.hsp.labella.services.previewing.LanguagePreviewingService
 import sh.hsp.labella.services.previewing.PreviewingService
@@ -37,6 +40,43 @@ import javax.servlet.Filter
 
 @Configuration
 class BeanConfiguration {
+
+    @Bean
+    fun printingService(
+        languagePrinterService: LanguagePrinterService,
+        imageToLanguage: ImageToLanguage,
+        previewingService: PreviewingService
+    ): PrintingService =
+        LanguagePrintingService(
+            previewingService,
+            imageToLanguage,
+            languagePrinterService
+        )
+
+    @Bean
+    fun previewingService(
+        templatingService: TemplatingService,
+        svgSizeExtractor: SvgSizeExtractor,
+        multipleSVGRendererService: MultipleSVGRenderingService,
+        labelSizeProvider: LabelSizeProvider,
+        templateRepository: TemplateRepository
+    ): PreviewingService =
+        CachedPreviewingService(
+            LanguagePreviewingService(
+                templatingService,
+                svgSizeExtractor,
+                multipleSVGRendererService,
+                labelSizeProvider
+            )
+        )
+
+    @Bean
+    fun templatingService(
+        templateRepository: TemplateRepository,
+        templateService: TemplateService
+    ): TemplatingService {
+        return TemplatingServiceImpl(templateRepository, templateService)
+    }
 
     @Bean
     fun templateService(): TemplateService {
@@ -72,37 +112,9 @@ class BeanConfiguration {
         SvgSizeExtractorImpl()
 
     @Bean
-    fun printingService(
-        languagePrinterService: LanguagePrinterService,
-        imageToLanguage: ImageToLanguage,
-        previewingService: PreviewingService
-    ): PrintingService =
-        LanguagePrintingService(
-            previewingService,
-            imageToLanguage,
-            languagePrinterService
-        )
-
-    @Bean
-    fun previewingService(
-        templatingService: TemplatingService,
-        svgSizeExtractor: SvgSizeExtractor,
-        multipleSVGRendererService: MultipleSVGRenderingService,
-        templateRepository: TemplateRepository
-    ): PreviewingService =
-        CachedPreviewingService(
-            LanguagePreviewingService(
-                templatingService,
-                svgSizeExtractor,
-                multipleSVGRendererService,
-            )
-        )
-
-    @Bean
-    fun templatingService(
-        templateRepository: TemplateRepository,
-        templateService: TemplateService
-    ): TemplatingService {
-        return TemplatingServiceImpl(templateRepository, templateService)
-    }
+    fun labelSizeProvider(
+        @Value("\${label.width}") width: Int,
+        @Value("\${label.height}") height: Int
+    ) =
+        FixedLabelSizeProvider(width, height)
 }
