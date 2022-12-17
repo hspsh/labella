@@ -2,7 +2,9 @@
 Just use docker, not sure though if it will work.
 
 To build: `docker build . -t labella`.  
-To run: ```docker run -v PRINTER_NAME=ZEBRA_NAME_IN_CUPS --net=host -v "`pwd`/data:/data" labella```.
+To run: ```docker run -e printerName=ZPL_ZPL_Label_Printer -e LABEL_WIDTH=465 -e LABEL_HEIGHT=356  --net=host -v "`pwd`/data:/data:rw" labella```.  
+You may need to use `--priviliged` in podman PLS FIX.
+
 
 # Developer start
 You should just run it as a normal java developer.  
@@ -26,5 +28,5 @@ The more you know Spring the better.
 ## Production
 
 If you are running it outside the docker, then please run:
-`java -Dspring.datasource.url=jdbc:h2:file:/path/to/labella/db -DprinterName=??? -Dserver.port=8080 -jar app.jar`
+`java -jar -Dspring.datasource.url=jdbc:h2:file:./path/to/labella/db -DprinterName=??? -Dserver.port=8080 -Dlabel.width=??? -Dlabel.height=??? app.jar`
 Best build by gettobuild.sh, it will build also frontend.

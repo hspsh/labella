@@ -17,28 +17,54 @@ But images speak better:
 
 Just tinker with it and as things, so I can add to FAQ.
 
+## Features and quirks
+
+### Jinjava (jinja) under the mask
+
+You a python developer?  
+Not knowing how to code with class?  
+Just hack your way with writing tons of jinja markup in your svgs.  
+
+Very important that all template inputs are just "{{nameOfVariable}}" inside the svg.  
+Download one to see it with your own eyes.
+
+### Many SVGs in one SVG
+
+If you edit your svg file to look like:
+```
+<svgs>
+    <svg>...</svg>
+    <svg>...</svg>
+<svgs>
+```
+then all svgs inside the `<svgs>` will be printed separately.
+Great feature to wasting tons of paper by one template.
+
+### Size extraction from your svg
+
+It will extract size to print from your xs and ys of svg file.
+See `SvgSizeExtractorImpl.kt` for reference.
+
+### SVGFlavors and qrCode generation
+See `QRCodeFlavor.kt`.
+In short adding `qrCode` attribute to your `<image>` will convert it to qrCode.
+It is very naive implementation and it will generate very poor quality qrCode.
+TODO: Try to change it to svg generator.
+
 ## RUNNING
 
-See [backend readme](./backend/README.md) for more info.  
-Normally run either by docker:
-```
-docker build . -t labella
-docker run -v PRINTER_NAME=ZEBRA_NAME_IN_CUPS --net=host -v "`pwd`/data:/data" labella
-```
+See [backend readme](./backend/README.md) for referenced sections...  
 
-or:
+Use the docker from the root catalog, see *Quickstart* how to run it...  
+You can also run it without the docker, then use just `./gettobuild` and follow *Production* section.
 
-```
-./gettobuild.sh
-java -jar -Dspring.datasource.url=jdbc:h2:file:./db -DprinterName=EPL1_EPL1_Label_Printer -Dserver.port=8080 app.jar
-```
 
 ### DEVELOPMENT
 
 
 See [backend readme - Developer Start](./backend/README.md) for more info.  
 
-and  
+and
 
 See [frontend dev](./froncik/DEV.md) for more info.  
 
