@@ -25,6 +25,14 @@ MainConfiguration constructs whole application + Spring Scanning magic for Contr
 
 The more you know Spring the better.
 
+### Convention in deep
+
+```plantuml
+@startuml
+A -> B
+@enduml
+```
+
 ## Production
 
 If you are running it outside the docker, then please run:

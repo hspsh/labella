@@ -7,9 +7,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import sh.hsp.labella.model.Template
 
 @Configuration
-class RestConfiguration : RepositoryRestConfigurer {
+class SpringDataRestConfiguration : RepositoryRestConfigurer {
     override fun configureRepositoryRestConfiguration(
-            config: RepositoryRestConfiguration, cors: CorsRegistry) {
+        config: RepositoryRestConfiguration, cors: CorsRegistry
+    ) {
         config.exposeIdsFor(Template::class.java)
     }
 }

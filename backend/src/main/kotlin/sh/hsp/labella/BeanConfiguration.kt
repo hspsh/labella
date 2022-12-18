@@ -14,6 +14,7 @@ import sh.hsp.labella.application.adapters.svg.flavor.SVGFlavor
 import sh.hsp.labella.application.adapters.svg.flavor.flavors.QRCodeFlavor
 import sh.hsp.labella.application.adapters.svg.size.SvgSizeExtractorImpl
 import sh.hsp.labella.application.adapters.template.JinjaTemplateService
+import sh.hsp.labella.application.ports.TemplateRepository
 import sh.hsp.labella.application.services.previewing.CachedPreviewingService
 import sh.hsp.labella.application.services.previewing.LanguagePreviewingService
 import sh.hsp.labella.application.services.previewing.PreviewingService
@@ -22,7 +23,7 @@ import sh.hsp.labella.application.services.printing.PrintingService
 import sh.hsp.labella.application.services.templating.TemplatingService
 import sh.hsp.labella.application.services.templating.TemplatingServiceImpl
 import sh.hsp.labella.model.ports.*
-import sh.hsp.labella.peripherals.adapters.TemplateRepository
+import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
 
 
 @Configuration
@@ -46,7 +47,7 @@ class BeanConfiguration {
         svgSizeExtractor: SvgSizeExtractor,
         multipleSVGRendererService: MultipleSVGRenderingService,
         labelSizeProvider: LabelSizeProvider,
-        templateRepository: TemplateRepository
+        templateRepository: SpringTemplateRepository
     ): PreviewingService =
         CachedPreviewingService(
             LanguagePreviewingService(
@@ -59,7 +60,7 @@ class BeanConfiguration {
 
     @Bean
     fun templatingService(
-        templateRepository: TemplateRepository,
+        templateRepository: SpringTemplateRepository,
         templateService: TemplateService
     ): TemplatingService {
         return TemplatingServiceImpl(templateRepository, templateService)

@@ -5,12 +5,12 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sh.hsp.labella.application.services.templating.TemplatingService
-import sh.hsp.labella.peripherals.adapters.TemplateRepository
+import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
 
 
 @RestController
 @RequestMapping(path = ["/api/templates/{templateId}"])
-class DownloadController(val repository: TemplateRepository, val templatingService: TemplatingService) {
+class DownloadController(val repository: SpringTemplateRepository, val templatingService: TemplatingService) {
 
     @GetMapping(produces = [MediaType.APPLICATION_OCTET_STREAM_VALUE], path = ["/download"])
     fun download(@PathVariable templateId: Long): ResponseEntity<String> {

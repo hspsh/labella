@@ -15,7 +15,7 @@
 	<description>Labello but nicely written</description>
 	<properties>
 		<java.version>11</java.version>
-		<kotlin.version>1.6.21</kotlin.version>
+		<kotlin.version>1.7.20</kotlin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -109,6 +109,7 @@
 				<configuration>
 					<args>
 						<arg>-Xjsr305=strict</arg>
+						<arg>-Xjvm-default=enable</arg>
 					</args>
 					<compilerPlugins>
 						<plugin>spring</plugin>
