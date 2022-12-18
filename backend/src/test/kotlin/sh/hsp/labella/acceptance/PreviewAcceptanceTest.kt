@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.http.HttpStatus
-import sh.hsp.labella.controller.PreviewController
-import sh.hsp.labella.controller.PreviewController.ImagesDTO
+import sh.hsp.labella.peripherals.controllers.PreviewController.ImagesDTO
 import sh.hsp.labella.model.Template
 import java.awt.image.BufferedImage
 import java.io.BufferedReader

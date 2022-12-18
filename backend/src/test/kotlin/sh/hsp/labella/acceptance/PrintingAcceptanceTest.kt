@@ -1,16 +1,15 @@
 package sh.hsp.labella.acceptance
 
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
-import sh.hsp.labella.controller.PrintDTO
+import sh.hsp.labella.peripherals.controllers.PrintDTO
 import sh.hsp.labella.model.Template
-import sh.hsp.labella.model.LanguagePrinterService
+import sh.hsp.labella.model.ports.LanguagePrinterService
 import java.io.BufferedReader
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

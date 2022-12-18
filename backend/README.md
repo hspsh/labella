@@ -21,7 +21,7 @@ There are noun named services that are building bricks.
 There are verb named services which execute business case.  
 Of course there are also controllers.  
 TemplateCRUD is a controller, and a repository - Spring Data Rest magic.  
-MainConfiguration constructs whole application + Spring Scanning magic.
+MainConfiguration constructs whole application + Spring Scanning magic for Controllers and Repositories.
 
 The more you know Spring the better.
 

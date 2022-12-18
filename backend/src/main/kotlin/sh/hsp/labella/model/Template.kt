@@ -1,6 +1,7 @@
 package sh.hsp.labella.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import sh.hsp.labella.model.ports.*
 import java.awt.image.BufferedImage
 import java.util.*
 import java.util.function.Function
