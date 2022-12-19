@@ -1,4 +1,4 @@
-package sh.hsp.labella
+package sh.hsp.labella.peripherals
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -7,8 +7,8 @@ import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.filter.ShallowEtagHeaderFilter
-import sh.hsp.labella.infra.BufferedImageDeserializer
-import sh.hsp.labella.infra.BufferedImageSerializer
+import sh.hsp.labella.peripherals.infra.BufferedImageDeserializer
+import sh.hsp.labella.peripherals.infra.BufferedImageSerializer
 import java.awt.image.BufferedImage
 import javax.servlet.Filter
 

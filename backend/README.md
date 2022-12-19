@@ -25,16 +25,37 @@ MainConfiguration constructs whole application + Spring Scanning magic for Contr
 
 The more you know Spring the better.
 
-### Convention in deep
+### Hexagonal: Convention in deep
 
-```plantuml
-@startuml
-A -> B
-@enduml
-```
+Three layers
+1. model - model + ports
+2. application - application services + adapters, ports
+3. peripherals - controllers + adapters
+
+rules:
+- layers below don't know anything about layers above
+- layers below expose interfaces as ports
+- layers above may implement these interfaces as adapters and pass them bellow
+
+that results in:
+- Model rules are as clean as possible without any additional logic that would fog the vision
+- Application is world agnostic and made be run everywhere it needs
+- Peripherals may use any database or framework - they need just to fulfill the ports
+
+### Additional stuff that should be known
+
+- We are using Spring magic heavily in controllers - it is used also in BeanConfiguration to create application services.  
+- We are using `Spring Data Rest` here. See TemplateCRUD, SpringDataRestConfiguration and Swagger for behaviour.  
+    - It was done to accelerate the shipping speed for frontend collaboration - now I see it as a code debt.  
+    - Why? It is hard to understand what is going on here and non-intuitive in tweaking.  
+- We have swagger here, but I forgot the url.
 
 ## Production
 
-If you are running it outside the docker, then please run:
-`java -jar -Dspring.datasource.url=jdbc:h2:file:./path/to/labella/db -DprinterName=??? -Dserver.port=8080 -Dlabel.width=??? -Dlabel.height=??? app.jar`
-Best build by gettobuild.sh, it will build also frontend.
+If you are running it outside the docker, then please run:  
+`java -jar -Dspring.datasource.url=jdbc:h2:file:./path/to/labella/db -DprinterName=??? -Dserver.port=8080 -Dlabel.width=??? -Dlabel.height=??? app.jar`  
+Best build by gettobuild.sh, it will include also frontend.
+
+Of course docker build is also cool.  
+However, labella was created to enable hosting on raspberry pies and such.  
+(Yes, I know it is Java)

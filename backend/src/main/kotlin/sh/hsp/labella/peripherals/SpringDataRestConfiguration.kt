@@ -1,4 +1,4 @@
-package sh.hsp.labella.peripherals.configuration
+package sh.hsp.labella.peripherals
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration

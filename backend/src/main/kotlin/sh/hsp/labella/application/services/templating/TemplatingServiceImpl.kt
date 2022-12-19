@@ -9,13 +9,8 @@ class TemplatingServiceImpl(
     val templateService: TemplateService
 ) : TemplatingService {
     override fun template(templateId: Long, fields: Map<String, String>): TemplatedDTO {
-        val maybeTemplate = templateRepository.findById(templateId)
-        if (maybeTemplate.isEmpty) {
-            throw ResourceNotFoundException()
-        }
 
-        val template = maybeTemplate.get()
-
+        val template = templateRepository.findById(templateId) ?: throw ResourceNotFoundException()
         val render =
             template
                 .template(
@@ -28,12 +23,7 @@ class TemplatingServiceImpl(
 
 
     override fun fields(templateId: Long): List<String> {
-        val maybeTemplate = templateRepository.findById(templateId)
-        if (maybeTemplate.isEmpty) {
-            throw ResourceNotFoundException()
-        }
-
-        val template = maybeTemplate.get()
+        val template = templateRepository.findById(templateId) ?: throw ResourceNotFoundException()
 
         return template.fields { contents -> templateService.listFields(contents) }
     }

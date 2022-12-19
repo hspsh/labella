@@ -24,6 +24,8 @@ import sh.hsp.labella.application.services.templating.TemplatingService
 import sh.hsp.labella.application.services.templating.TemplatingServiceImpl
 import sh.hsp.labella.model.ports.*
 import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 
 @Configuration
@@ -60,7 +62,7 @@ class BeanConfiguration {
 
     @Bean
     fun templatingService(
-        templateRepository: SpringTemplateRepository,
+        templateRepository: TemplateRepository,
         templateService: TemplateService
     ): TemplatingService {
         return TemplatingServiceImpl(templateRepository, templateService)

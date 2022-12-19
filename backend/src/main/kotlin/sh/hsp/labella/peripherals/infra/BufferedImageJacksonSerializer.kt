@@ -1,4 +1,4 @@
-package sh.hsp.labella.infra
+package sh.hsp.labella.peripherals.infra
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
