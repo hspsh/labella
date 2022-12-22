@@ -5,14 +5,14 @@ import sh.hsp.labella.application.adapters.svg.flavor.RewritingCodeFlavor
 import sh.hsp.labella.application.adapters.svg.flavor.map
 import sh.hsp.labella.application.adapters.svg.flavor.writeToString
 import sh.hsp.labella.model.RenderingInput.SVGRenderingInput
-import sh.hsp.labella.model.RenderingOutput
+import sh.hsp.labella.model.RenderedImage
 import sh.hsp.labella.model.ports.MultipleSVGRenderingService
 import sh.hsp.labella.model.ports.SVGRendererService
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.xpath.XPathConstants
 
 class MultipleSVGRenderingServiceImpl(val rendererService: SVGRendererService) : MultipleSVGRenderingService {
-    override fun renderAll(renderingInput: SVGRenderingInput): List<RenderingOutput> {
+    override fun renderAll(renderingInput: SVGRenderingInput): List<RenderedImage> {
         val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
         val doc = documentBuilder.parse(renderingInput.content.byteInputStream())
 

@@ -13,7 +13,7 @@ class TemplatingServiceImpl(
         val template = templateRepository.findById(templateId) ?: throw ResourceNotFoundException()
         val render =
             template
-                .template(
+                .renderTemplate(
                     fields,
                     templateService
                 )
@@ -25,6 +25,6 @@ class TemplatingServiceImpl(
     override fun fields(templateId: Long): List<String> {
         val template = templateRepository.findById(templateId) ?: throw ResourceNotFoundException()
 
-        return template.fields { contents -> templateService.listFields(contents) }
+        return template.extractFieldNamesFromTemplate { contents -> templateService.listFields(contents) }
     }
 }

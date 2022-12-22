@@ -46,18 +46,18 @@ class Template {
         updated = Date()
     }
 
-    fun template(
+    fun renderTemplate(
         fields: Map<String, String>?,
         templateService: TemplateService,
-    ): Templated {
+    ): RenderedTemplate {
         if (type != TemplateType.SVG) {
             throw UnsupportedOperationException()
         }
 
-        return Templated(templateService.render(template, fields ?: emptyMap()))
+        return RenderedTemplate(templateService.render(template, fields ?: emptyMap()))
     }
 
-    fun fields(fieldExtractor: Function<String, List<String>>): List<String> =
+    fun extractFieldNamesFromTemplate(fieldExtractor: Function<String, List<String>>): List<String> =
         fieldExtractor.apply(template)
 
 
@@ -66,18 +66,18 @@ class Template {
     }
 }
 
-data class Templated(val templated: String) {
+data class RenderedTemplate(val template: String) {
     val DEFAULT_LABEL_SIZE = PrintDimensions.ORANGE_LABEL
 
-    fun render(
+    fun renderToImage(
         svgSizeExtractor: SvgSizeExtractor,
         labelSizeProvider: LabelSizeProvider,
         SVGRenderer: MultipleSVGRenderingService
-    ): List<RenderingOutput> {
-        val svgDimensions = svgSizeExtractor.extract(templated) ?: DEFAULT_LABEL_SIZE
+    ): List<RenderedImage> {
+        val svgDimensions = svgSizeExtractor.extract(template) ?: DEFAULT_LABEL_SIZE
         val labelSize = labelSizeProvider.provideLabelSize(svgDimensions)
         val toRenderDimensions = svgDimensions.rescale(labelSize)
-        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(templated, toRenderDimensions))
+        return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(template, toRenderDimensions))
     }
 
     fun PrintDimensions.rescale(to: PrintDimensions): PrintDimensions {
@@ -93,7 +93,7 @@ data class Templated(val templated: String) {
     }
 }
 
-data class RenderingOutput(val image: BufferedImage) {
+data class RenderedImage(val image: BufferedImage) {
     fun printViaLanguage(
         imageToLanguageConverter: ImageToLanguage,
         languagePrinter: LanguagePrinterService

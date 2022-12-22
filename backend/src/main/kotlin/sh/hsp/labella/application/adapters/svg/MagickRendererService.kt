@@ -4,7 +4,7 @@ import org.im4java.core.ConvertCmd
 import org.im4java.core.IMOperation
 import org.im4java.process.Pipe
 import sh.hsp.labella.model.RenderingInput
-import sh.hsp.labella.model.RenderingOutput
+import sh.hsp.labella.model.RenderedImage
 import sh.hsp.labella.model.ports.SVGRendererService
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -13,7 +13,7 @@ import javax.imageio.ImageIO
 
 
 class MagickRendererService : SVGRendererService {
-    override fun render(input: RenderingInput.SVGRenderingInput): RenderingOutput {
+    override fun render(input: RenderingInput.SVGRenderingInput): RenderedImage {
 
         val dimens = input.printDimensions
         val cmdOutputStream = ByteArrayOutputStream()
@@ -37,7 +37,7 @@ class MagickRendererService : SVGRendererService {
         val bufferedImageStream = ByteArrayInputStream(cmdOutputStream.toByteArray())
         val bufferedImage: BufferedImage = ImageIO.read(bufferedImageStream)
 
-        return RenderingOutput(bufferedImage)
+        return RenderedImage(bufferedImage)
     }
 
 }

@@ -2,7 +2,7 @@ package sh.hsp.labella.application.adapters.svg
 
 import com.sun.istack.logging.Logger
 import sh.hsp.labella.model.RenderingInput
-import sh.hsp.labella.model.RenderingOutput
+import sh.hsp.labella.model.RenderedImage
 import sh.hsp.labella.model.ports.SVGRendererService
 import java.io.File
 import javax.imageio.ImageIO
@@ -16,7 +16,7 @@ class InkscapeRendererService : SVGRendererService {
         }
     }
 
-    override fun render(renderingInput: RenderingInput.SVGRenderingInput): RenderingOutput {
+    override fun render(renderingInput: RenderingInput.SVGRenderingInput): RenderedImage {
         val inputFile = File.createTempFile("labella", ".svg")
         inputFile.writeText(renderingInput.content)
 
@@ -38,7 +38,7 @@ class InkscapeRendererService : SVGRendererService {
             logger.info("Inkscape exited with: $executed")
 
             val image = ImageIO.read(outputFile)
-            return RenderingOutput(image)
+            return RenderedImage(image)
         } finally {
             inputFile.delete()
             outputFile.delete()

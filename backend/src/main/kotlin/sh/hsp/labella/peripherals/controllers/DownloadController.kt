@@ -28,6 +28,6 @@ class DownloadController(val repository: SpringTemplateRepository, val templatin
 
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"${template.fileName}.svg\"")
-            .body(template.templated.templated);
+            .body(template.templated.template);
     }
 }
