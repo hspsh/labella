@@ -60,7 +60,6 @@ class Template {
     fun extractFieldNamesFromTemplate(fieldExtractor: Function<String, List<String>>): List<String> =
         fieldExtractor.apply(template)
 
-
     enum class TemplateType {
         SVG, MD
     }
