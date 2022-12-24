@@ -71,25 +71,12 @@ data class RenderedTemplate(val template: String) {
 
     fun renderToImage(
         svgSizeExtractor: SvgSizeExtractor,
-        labelSizeProvider: LabelSizeProvider,
+        labelRescaler: LabelRescaler,
         SVGRenderer: MultipleSVGRenderingService
     ): List<RenderedImage> {
         val svgDimensions = svgSizeExtractor.extract(template) ?: DEFAULT_LABEL_SIZE
-        val labelSize = labelSizeProvider.provideLabelSize(svgDimensions)
-        val toRenderDimensions = svgDimensions.rescale(labelSize)
+        val toRenderDimensions = labelRescaler.rescale(svgDimensions)
         return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(template, toRenderDimensions))
-    }
-
-    fun PrintDimensions.rescale(to: PrintDimensions): PrintDimensions {
-        val xScale = to.xInPixels.toFloat() / this.xInPixels
-        val yScale = to.yInPixel.toFloat() / this.yInPixel
-
-        val scale = min(xScale, yScale)
-
-        return PrintDimensions(
-            (this.xInPixels * scale).roundToInt(),
-            (this.yInPixel * scale).roundToInt()
-        )
     }
 }
 

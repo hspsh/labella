@@ -3,6 +3,8 @@ package sh.hsp.labella
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import sh.hsp.labella.application.adapters.label.LabelFittingRescaler
+import sh.hsp.labella.application.adapters.label.size.FixedLabelSizeProvider
 import sh.hsp.labella.application.adapters.printer.LpCliLanguagePrinterService
 import sh.hsp.labella.application.adapters.printer.converter.ImageToLanguageImpl
 import sh.hsp.labella.application.adapters.printer.converter.mono.SimpleImageToMono
@@ -24,8 +26,6 @@ import sh.hsp.labella.application.services.templating.TemplatingService
 import sh.hsp.labella.application.services.templating.TemplatingServiceImpl
 import sh.hsp.labella.model.ports.*
 import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
-import java.util.*
-import kotlin.jvm.optionals.getOrNull
 
 
 @Configuration
@@ -48,7 +48,7 @@ class BeanConfiguration {
         templatingService: TemplatingService,
         svgSizeExtractor: SvgSizeExtractor,
         multipleSVGRendererService: MultipleSVGRenderingService,
-        labelSizeProvider: LabelSizeProvider,
+        labelRescaler: LabelRescaler,
         templateRepository: SpringTemplateRepository
     ): PreviewingService =
         CachedPreviewingService(
@@ -56,7 +56,7 @@ class BeanConfiguration {
                 templatingService,
                 svgSizeExtractor,
                 multipleSVGRendererService,
-                labelSizeProvider
+                labelRescaler
             )
         )
 
@@ -98,6 +98,13 @@ class BeanConfiguration {
     }
 
     @Bean
+    fun labelRescaler(
+        labelSizeProvider: LabelSizeProvider
+    ): LabelRescaler =
+        LabelFittingRescaler(labelSizeProvider)
+
+
+    @Bean
     fun svgSizeExtractor() =
         SvgSizeExtractorImpl()
 
@@ -105,6 +112,6 @@ class BeanConfiguration {
     fun labelSizeProvider(
         @Value("\${label.width}") width: Int,
         @Value("\${label.height}") height: Int
-    ) =
-        sh.hsp.labella.application.adapters.label.FixedLabelSizeProvider(width, height)
+    ): LabelSizeProvider =
+        FixedLabelSizeProvider(width, height)
 }
