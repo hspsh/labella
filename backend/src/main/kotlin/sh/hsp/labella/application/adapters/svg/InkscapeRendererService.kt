@@ -1,14 +1,14 @@
 package sh.hsp.labella.application.adapters.svg
 
 import com.sun.istack.logging.Logger
-import sh.hsp.labella.model.RenderingInput
 import sh.hsp.labella.model.RenderedImage
+import sh.hsp.labella.model.RenderingInput
 import sh.hsp.labella.model.ports.SVGRendererService
 import java.io.File
 import javax.imageio.ImageIO
 
 class InkscapeRendererService : SVGRendererService {
-    val logger = Logger.getLogger(InkscapeRendererService::class.java)
+    private val logger = Logger.getLogger(InkscapeRendererService::class.java)
 
     constructor() {
         if (Runtime.getRuntime().exec("inkscape --version").waitFor() != 0) {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import sh.hsp.labella.application.adapters.label.LabelFittingRescaler
-import sh.hsp.labella.application.adapters.label.size.FixedLabelSizeProvider
+import sh.hsp.labella.application.adapters.label.size.ConfigLabelSizeProvider
 import sh.hsp.labella.application.adapters.printer.LpCliLanguagePrinterService
 import sh.hsp.labella.application.adapters.printer.converter.ImageToLanguageImpl
 import sh.hsp.labella.application.adapters.printer.converter.mono.SimpleImageToMono
@@ -17,6 +17,8 @@ import sh.hsp.labella.application.adapters.svg.flavor.flavors.QRCodeFlavor
 import sh.hsp.labella.application.adapters.svg.size.SvgSizeExtractorImpl
 import sh.hsp.labella.application.adapters.template.JinjaTemplateService
 import sh.hsp.labella.application.ports.TemplateRepository
+import sh.hsp.labella.application.services.configuration.ConfigurationService
+import sh.hsp.labella.application.services.configuration.ConfigurationServiceImpl
 import sh.hsp.labella.application.services.previewing.CachedPreviewingService
 import sh.hsp.labella.application.services.previewing.LanguagePreviewingService
 import sh.hsp.labella.application.services.previewing.PreviewingService
@@ -24,6 +26,8 @@ import sh.hsp.labella.application.services.printing.LanguagePrintingService
 import sh.hsp.labella.application.services.printing.PrintingService
 import sh.hsp.labella.application.services.templating.TemplatingService
 import sh.hsp.labella.application.services.templating.TemplatingServiceImpl
+import sh.hsp.labella.model.PrintDimensions
+import sh.hsp.labella.model.RuntimeConfiguration
 import sh.hsp.labella.model.ports.*
 import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
 
@@ -69,6 +73,11 @@ class BeanConfiguration {
     }
 
     @Bean
+    fun configurationService(
+        configuration: RuntimeConfiguration
+    ): ConfigurationService = ConfigurationServiceImpl(configuration)
+
+    @Bean
     fun templateService(): TemplateService {
         return JinjaTemplateService()
     }
@@ -103,15 +112,22 @@ class BeanConfiguration {
     ): LabelRescaler =
         LabelFittingRescaler(labelSizeProvider)
 
-
     @Bean
     fun svgSizeExtractor() =
         SvgSizeExtractorImpl()
 
     @Bean
-    fun labelSizeProvider(
+    fun configuration(
         @Value("\${label.width}") width: Int,
         @Value("\${label.height}") height: Int
+    ) =
+        RuntimeConfiguration(
+            PrintDimensions(width, height)
+        )
+
+    @Bean
+    fun labelSizeProvider(
+        configuration: RuntimeConfiguration
     ): LabelSizeProvider =
-        FixedLabelSizeProvider(width, height)
+        ConfigLabelSizeProvider(configuration)
 }

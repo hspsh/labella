@@ -1,3 +1,5 @@
 app.jar
 db.mv.db
 data
+.idea/
+.DS_Store

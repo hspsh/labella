@@ -1,13 +1,18 @@
 package sh.hsp.labella.application.adapters.label
 
+import com.sun.istack.logging.Logger
 import sh.hsp.labella.model.PrintDimensions
 import sh.hsp.labella.model.ports.LabelRescaler
 import sh.hsp.labella.model.ports.LabelSizeProvider
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class LabelFittingRescaler(val sizeProvider: LabelSizeProvider) : LabelRescaler {
+class LabelFittingRescaler(private val sizeProvider: LabelSizeProvider) : LabelRescaler {
+
+    private val logger = Logger.getLogger(LabelFittingRescaler::class.java)
+
     override fun rescale(original: PrintDimensions): PrintDimensions {
+        logger.info("Original size: ${original.xInPixels}x${original.yInPixel}")
         val labelSize = sizeProvider.provideLabelSize(original)
         return original.rescale(labelSize)
     }
