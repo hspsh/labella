@@ -2,6 +2,8 @@ import { createContext, ReactNode, useState } from "react";
 import Template, { TemplateType } from "../common/Template";
 import API from "../lib/api";
 
+const PRINTING_MINIMAL_TIMEOUT = 1000;
+
 type Store = {
   templates: Template[];
   isLoading: number;
@@ -17,6 +19,7 @@ type Context = Store & {
     type: TemplateType
   ) => Promise<void>;
   fetch: () => Promise<void>;
+  print: (id: number, attributes: Record<string, string>) => Promise<void>;
 };
 
 type Props = {
@@ -30,7 +33,16 @@ export const TemplatesContext = createContext<Context>({
   async delete() {},
   async update() {},
   async fetch() {},
+  async print() {},
 });
+
+function timeout(milliseconds: number) {
+  return new Promise((res: Function) => {
+    setTimeout(() => {
+      res();
+    }, milliseconds);
+  });
+}
 
 export default function TemplatesStore({ children }: Props) {
   const [state, setState] = useState<Store>({
@@ -105,6 +117,19 @@ export default function TemplatesStore({ children }: Props) {
           console.log(e);
         }
       });
+    },
+    print: async (id: number, attributes: Record<string, string>) => {
+      try {
+        return withLoading(async () => {
+          await Promise.all([
+            timeout(PRINTING_MINIMAL_TIMEOUT),
+            API.templates.print(id, attributes),
+          ]);
+        });
+      } catch (e) {
+        alert("nie pykło drukowanie :/");
+        console.log(e);
+      }
     },
   };
 
