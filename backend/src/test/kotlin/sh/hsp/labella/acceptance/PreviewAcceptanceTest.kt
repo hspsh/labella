@@ -11,6 +11,7 @@ import sh.hsp.labella.peripherals.controllers.PreviewController.ImagesDTO
 import sh.hsp.labella.model.Template
 import java.awt.image.BufferedImage
 import java.io.BufferedReader
+import java.util.stream.Collectors
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PreviewAcceptanceTest {

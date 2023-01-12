@@ -9,6 +9,7 @@ import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
 
 
 @RestController
+@CrossOrigin(origins = ["*"])
 @RequestMapping(path = ["/api/templates/{templateId}"])
 class DownloadController(val repository: SpringTemplateRepository, val templatingService: TemplatingService) {
 

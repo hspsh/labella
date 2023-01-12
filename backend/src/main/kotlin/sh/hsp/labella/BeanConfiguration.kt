@@ -19,7 +19,6 @@ import sh.hsp.labella.application.adapters.template.JinjaTemplateService
 import sh.hsp.labella.application.ports.TemplateRepository
 import sh.hsp.labella.application.services.configuration.ConfigurationService
 import sh.hsp.labella.application.services.configuration.ConfigurationServiceImpl
-import sh.hsp.labella.application.services.previewing.CachedPreviewingService
 import sh.hsp.labella.application.services.previewing.LanguagePreviewingService
 import sh.hsp.labella.application.services.previewing.PreviewingService
 import sh.hsp.labella.application.services.printing.LanguagePrintingService
@@ -30,6 +29,7 @@ import sh.hsp.labella.model.PrintDimensions
 import sh.hsp.labella.model.RuntimeConfiguration
 import sh.hsp.labella.model.ports.*
 import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
+import sh.hsp.labella.peripherals.services.CachedPreviewingService
 
 
 @Configuration
