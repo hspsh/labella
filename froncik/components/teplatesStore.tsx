@@ -9,6 +9,13 @@ type Store = {
 
 type Context = Store & {
   add: (name: string, content: string, type: TemplateType) => Promise<void>;
+  delete: (id: number) => Promise<void>;
+  update: (
+    id: number,
+    name: string,
+    content: string,
+    type: TemplateType
+  ) => Promise<void>;
   fetch: () => Promise<void>;
 };
 
@@ -20,6 +27,8 @@ export const TemplatesContext = createContext<Context>({
   templates: [],
   isLoading: 0,
   async add() {},
+  async delete() {},
+  async update() {},
   async fetch() {},
 });
 
@@ -38,6 +47,25 @@ export default function TemplatesStore({ children }: Props) {
         setState({ ...state, templates: [...state.templates, tpl] });
       } catch (e) {
         alert("nie pykło dodawanie szablonu");
+        console.log(e);
+      }
+    },
+    delete: async (id) => {
+      try {
+        await API.templates.delete(id);
+        const newTemplates = state.templates.filter((t) => t.id != id);
+        setState({ ...state, templates: newTemplates });
+      } catch (e) {
+        alert("nie pykło usuwanie szablonu");
+        console.log(e);
+      }
+    },
+    update: async (id, name, content, type) => {
+      try {
+        const tpl = await API.templates.update(id, name, content, type);
+        setState({ ...state, templates: [...state.templates, tpl] });
+      } catch (e) {
+        alert("nie pykło aktualizowanie szablonu");
         console.log(e);
       }
     },
