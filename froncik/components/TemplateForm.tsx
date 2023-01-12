@@ -123,6 +123,11 @@ export default function TemplateForm({
           <Button variant="primary" type="submit">
             {submitText}
           </Button>
+
+
+          <Button variant="secondary" type="submit">
+            pobierz
+          </Button>
         </Form>
       </Card.Body>
     </Card>
