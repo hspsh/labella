@@ -7,9 +7,10 @@ import API from "../lib/api";
 
 type Props = {
   template: Template;
+  onDelete: (id: number) => void;
 };
 
-export default function TemplateCard({template}: Props) {
+export default function TemplateCard({ template, onDelete }: Props) {
   const buttonStyle = {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -27,13 +28,23 @@ export default function TemplateCard({template}: Props) {
         <Stack direction="horizontal" gap={3}>
           <h4>{template.name}</h4>
           <Dropdown className="ms-auto">
-            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-
-            </Dropdown.Toggle>
+            <Dropdown.Toggle
+              variant="secondary"
+              id="dropdown-basic"
+            ></Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href={`./api/templates/${template.id}/download`}>Pobierz</Dropdown.Item>
-              <Dropdown.Item href={routes.edit(template.id)}>Edytuj</Dropdown.Item>
-              <Dropdown.Item variant="danger" onClick={() => API.templates.delete(template.id)}>Usuń</Dropdown.Item>
+              <Dropdown.Item href={`./api/templates/${template.id}/download`}>
+                Pobierz
+              </Dropdown.Item>
+              <Dropdown.Item href={routes.edit(template.id)}>
+                Edytuj
+              </Dropdown.Item>
+              <Dropdown.Item
+                variant="danger"
+                onClick={() => onDelete(template.id)}
+              >
+                Usuń
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Stack>

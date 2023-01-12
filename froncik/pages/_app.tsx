@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
 
 import Layout from "../components/Layout";
+import TemplatesStore from "../components/teplatesStore";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,9 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <TemplatesStore>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </TemplatesStore>
     </>
   );
 }

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 
+import { TemplatesContext } from "./teplatesStore";
 import API from "../lib/api";
 
 type Props = {
@@ -26,6 +27,7 @@ export default function TemplatePrinterForm({
   const [fields, setFields] = useState<Record<string, string>>(
     arrayOfStringToObjectKeys(attributes)
   );
+  const ctx = useContext(TemplatesContext);
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -50,7 +52,7 @@ export default function TemplatePrinterForm({
             /* @ts-ignore */
             if(event.nativeEvent?.submitter?.name != "download"){
               event.preventDefault();
-              API.templates.print(id, fields);
+              ctx.print(id, fields);
             }
           }}
         >

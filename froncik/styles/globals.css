@@ -1,0 +1,7 @@
+html, body {
+  height: 100%;
+}
+
+body.loading, body.loading * {
+  cursor: wait !important;
+}
