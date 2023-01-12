@@ -125,9 +125,7 @@ export default function TemplateForm({
           </Button>
 
 
-          <Button variant="secondary" type="submit">
-            pobierz
-          </Button>
+
         </Form>
       </Card.Body>
     </Card>

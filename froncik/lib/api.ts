@@ -1,4 +1,4 @@
-import Template, { TemplateType } from "../common/Template";
+import Template, {TemplateType} from "../common/Template";
 
 const API_PATH = process.env.NEXT_PUBLIC_API_PATH || "/api";
 
@@ -89,6 +89,10 @@ const API = {
     previewSrc(id: number) {
       return `${API_PATH}/templates/${id}/preview`;
     },
+
+    download(id: number) {
+      return `${API_PATH}/templates/${id}/templated/download`
+    }
   },
   labels: {
     previewSrc(id: number, fields: Record<string, string>) {

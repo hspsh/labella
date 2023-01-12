@@ -44,11 +44,14 @@ export default function TemplatePrinterForm({
   return (
     <Card>
       <Card.Body>
-        <Form
+        <Form action={API.templates.download(id)} target="_blank"
           onSubmit={(event) => {
-            event.preventDefault();
-
-            API.templates.print(id, fields);
+            console.log(event)
+            /* @ts-ignore */
+            if(event.nativeEvent?.submitter?.name != "download"){
+              event.preventDefault();
+              API.templates.print(id, fields);
+            }
           }}
         >
           <>
@@ -63,6 +66,11 @@ export default function TemplatePrinterForm({
                 />
               </Form.Group>
             ))}
+
+            <Button variant="secondary" name={"download"} className={"me-2"} type="submit">
+              Pobierz
+            </Button>
+
             <Button variant="primary" type="submit">
               Drukuj
             </Button>
