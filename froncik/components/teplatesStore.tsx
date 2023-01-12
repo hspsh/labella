@@ -38,45 +38,73 @@ export default function TemplatesStore({ children }: Props) {
     isLoading: 0,
   });
 
+  async function withLoading(func: () => Promise<void>) {
+    setState((s) => {
+      return {
+        ...s,
+        isLoading: s.isLoading + 1,
+      };
+    });
+
+    try {
+      await func();
+    } finally {
+      setState((s) => {
+        return {
+          ...s,
+          isLoading: s.isLoading - 1,
+        };
+      });
+    }
+  }
+
   const ctx: Context = {
     templates: state.templates,
     isLoading: state.isLoading,
     add: async (name, content, type) => {
-      try {
-        const tpl = await API.templates.create(name, content, type);
-        setState({ ...state, templates: [...state.templates, tpl] });
-      } catch (e) {
-        alert("nie pykło dodawanie szablonu");
-        console.log(e);
-      }
+      return withLoading(async () => {
+        try {
+          const tpl = await API.templates.create(name, content, type);
+          setState((s) => ({ ...s, templates: [...state.templates, tpl] }));
+        } catch (e) {
+          alert("nie pykło dodawanie szablonu");
+          console.log(e);
+        }
+      });
     },
     delete: async (id) => {
-      try {
-        await API.templates.delete(id);
-        const newTemplates = state.templates.filter((t) => t.id != id);
-        setState({ ...state, templates: newTemplates });
-      } catch (e) {
-        alert("nie pykło usuwanie szablonu");
-        console.log(e);
-      }
+      return withLoading(async () => {
+        try {
+          await API.templates.delete(id);
+          const newTemplates = state.templates.filter((t) => t.id != id);
+          setState((s) => ({ ...s, templates: newTemplates }));
+        } catch (e) {
+          alert("nie pykło usuwanie szablonu");
+          console.log(e);
+        }
+      });
     },
     update: async (id, name, content, type) => {
-      try {
-        const tpl = await API.templates.update(id, name, content, type);
-        setState({ ...state, templates: [...state.templates, tpl] });
-      } catch (e) {
-        alert("nie pykło aktualizowanie szablonu");
-        console.log(e);
-      }
+      return withLoading(async () => {
+        try {
+          const tpl = await API.templates.update(id, name, content, type);
+          setState((s) => ({ ...s, templates: [...state.templates, tpl] }));
+        } catch (e) {
+          alert("nie pykło aktualizowanie szablonu");
+          console.log(e);
+        }
+      });
     },
     fetch: async () => {
-      try {
-        const templates = await API.templates.list();
-        setState({ ...state, templates: templates });
-      } catch (e) {
-        alert("nie pykło pobieranie szablonów");
-        console.log(e);
-      }
+      return withLoading(async () => {
+        try {
+          const templates = await API.templates.list();
+          setState((s) => ({ ...s, templates: templates }));
+        } catch (e) {
+          alert("nie pykło pobieranie szablonów");
+          console.log(e);
+        }
+      });
     },
   };
 
