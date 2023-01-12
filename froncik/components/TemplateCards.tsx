@@ -1,19 +1,22 @@
+import { useEffect, useContext } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import TemplateCard from "../components/TemplateCard";
-import Template from "../common/Template"
+import { TemplatesContext } from "../components/teplatesStore";
 
-type Props = {
-  templates: Template[]
-};
+export default function TemplateCards() {
+  const ctx = useContext(TemplatesContext);
 
-export default function TemplateCards({templates}: Props) {
+  useEffect(() => {
+    ctx.fetch();
+  }, []);
+
   return (
     <Row>
-      {templates.map((template) => (
-        <Col key={template.id} xxl={3} lg={4} md={6} sm={12} >
-          <TemplateCard template={template}/>
+      {ctx.templates.map((template) => (
+        <Col key={template.id} xxl={3} lg={4} md={6} sm={12}>
+          <TemplateCard template={template} onDelete={ctx.delete} />
         </Col>
       ))}
     </Row>
