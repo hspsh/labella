@@ -16,16 +16,5 @@ export default function ScreenLoader({ children }: Props) {
       document.body.classList.remove("loading");
   }, [ctx.isLoading])
 
-  // const style = {
-  //   cursor: "wait",
-  //   width: "100vw",
-  //   height: "100vh",
-  //   position: "fixed",
-  //   top: 0,
-  //   left: 0,
-  //   zIndex: 100,
-  //   visibility: ctx.isLoading != 0 ? "visible" : "hidden",
-  // } as React.CSSProperties;
-
   return <></>;
 }
