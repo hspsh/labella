@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card, Stack, Button, ButtonGroup, Dropdown } from "react-bootstrap";
+import {Card, Stack, Button, ButtonGroup, Dropdown} from "react-bootstrap";
 
 import routes from "../lib/routes";
 import Template from "../common/Template";
@@ -9,7 +9,7 @@ type Props = {
   template: Template;
 };
 
-export default function TemplateCard({ template }: Props) {
+export default function TemplateCard({template}: Props) {
   const buttonStyle = {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -20,7 +20,7 @@ export default function TemplateCard({ template }: Props) {
       border="primary"
       key="Primary"
       text="dark"
-      style={{ minWidth: "18rem" }}
+      style={{minWidth: "18rem"}}
       className="mb-2"
     >
       <Card.Header>
@@ -28,7 +28,7 @@ export default function TemplateCard({ template }: Props) {
           <h4>{template.name}</h4>
           <Dropdown className="ms-auto">
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-              
+
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item href={`./api/templates/${template.id}/download`}>Pobierz</Dropdown.Item>
@@ -39,19 +39,19 @@ export default function TemplateCard({ template }: Props) {
         </Stack>
       </Card.Header>
       <Stack direction="horizontal">
-        <div style={{ display: "inline-table" }}>
+        <div style={{display: "inline-table", width: "80%"}}>
           <Card.Img
             src={API.templates.previewSrc(template.id)}
             alt="Card image"
             style={
-              { "--bs-card-inner-border-radius": 0 } as React.CSSProperties
+              {"--bs-card-inner-border-radius": 0} as React.CSSProperties
             }
           />
         </div>
         <Stack>
           <ButtonGroup
             vertical
-            style={{ height: "100%" }}
+            style={{height: "100%"}}
             className="side-btns"
           >
             <Link href={routes.print(template.id)} passHref legacyBehavior>

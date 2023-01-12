@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 import TemplateForm from "../../../components/TemplateForm";
 import FormWithPreview from "../../../components/FormWithPreview";
 
 import API from "../../../lib/api";
+
 type QueryParams = {
   id: string;
 };
@@ -27,6 +28,6 @@ export default function Edit() {
   );
 
   return (
-    <FormWithPreview form={form} previewSrc={API.templates.previewSrc(id)} />
+    (!isNaN(id) && id) && <FormWithPreview form={form} id={id} fields={{}}/>
   );
 }

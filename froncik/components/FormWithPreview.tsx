@@ -1,11 +1,14 @@
-import { Container, Row, Col, Card } from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
+import React from "react";
+import Image from "./Image"
 
 type Props = {
   form: React.ReactNode;
-  previewSrc?: string
+  id: number,
+  fields: Record<string, string>
 };
 
-export default function FormWithPreview({ form, previewSrc }: Props) {
+export default function FormWithPreview({form, id, fields}: Props) {
   return (
     <Container>
       <Row>
@@ -17,14 +20,11 @@ export default function FormWithPreview({ form, previewSrc }: Props) {
             border="primary"
             key="Primary"
             text="dark"
-            style={{ minWidth: "18rem" }}
+            style={{minWidth: "18rem"}}
             className="mb-2"
           >
             <Card.Header>Podgląd</Card.Header>
-            <Card.Img
-              src={previewSrc}
-              alt="Card image"
-            />
+            <Image id={id} fields={fields}></Image>
           </Card>
         </Col>
       </Row>

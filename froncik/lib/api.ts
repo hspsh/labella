@@ -102,6 +102,16 @@ const API = {
 
       return `${API_PATH}/templates/${id}/preview?${queryString}`;
     },
+    previewImages(id: number, fields: Record<string, string>) {
+      const url = this.previewSrc(id, fields)
+
+      return myFetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
   },
 };
 
