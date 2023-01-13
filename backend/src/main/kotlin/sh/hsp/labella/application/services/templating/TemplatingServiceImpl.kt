@@ -22,7 +22,7 @@ class TemplatingServiceImpl(
     }
 
 
-    override fun fields(templateId: Long): List<String> {
+    override fun fields(templateId: Long): Set<String> {
         val template = templateRepository.findById(templateId) ?: throw ResourceNotFoundException()
 
         return template.extractFieldNamesFromTemplate { contents -> templateService.listFields(contents) }

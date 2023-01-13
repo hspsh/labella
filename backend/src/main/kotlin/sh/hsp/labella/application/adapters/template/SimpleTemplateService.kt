@@ -12,8 +12,8 @@ class SimpleTemplateService : TemplateService {
             )
         }
 
-    override fun listFields(templateContents: String): List<String> =
-        variableRegex.findAll(templateContents).toList().map { it.groups[1]!!.value }
+    override fun listFields(templateContents: String): Set<String> =
+        variableRegex.findAll(templateContents).toSet().map { it.groups[1]!!.value }.toSet()
 
 
 }

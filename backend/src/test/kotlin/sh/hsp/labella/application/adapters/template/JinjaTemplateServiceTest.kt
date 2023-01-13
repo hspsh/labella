@@ -21,7 +21,7 @@ class JinjaTemplateServiceTest {
 
         val output = jinjaTemplateService.listFields(randomString)
 
-        assertEquals(output, listOf("name"))
+        assertEquals(output, setOf("name"))
     }
 
 }

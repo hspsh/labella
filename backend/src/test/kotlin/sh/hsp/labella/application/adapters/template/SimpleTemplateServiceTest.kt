@@ -11,7 +11,7 @@ class SimpleTemplateServiceTest {
     fun testListFields() {
         val fields = simpleTemplateService.listFields(SAMPLE_TEMPLATE)
 
-        assertEquals(listOf("MOMA", "ROMA"), fields)
+        assertEquals(setOf("MOMA", "ROMA"), fields)
     }
 
     @Test

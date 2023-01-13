@@ -16,4 +16,4 @@ class TemplateAttributeController(
     }
 }
 
-data class AttributesDTO(val fields: List<String>) {}
+data class AttributesDTO(val fields: Set<String>) {}

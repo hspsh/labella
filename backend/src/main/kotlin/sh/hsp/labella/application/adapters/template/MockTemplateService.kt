@@ -7,7 +7,7 @@ class MockTemplateService : TemplateService {
         return templateContents
     }
 
-    override fun listFields(templateContents: String): List<String> {
-        return listOf("mock")
+    override fun listFields(templateContents: String): Set<String> {
+        return listOf("mock").toSet()
     }
 }

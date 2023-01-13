@@ -57,7 +57,7 @@ class Template {
         return RenderedTemplate(templateService.render(template, fields ?: emptyMap()))
     }
 
-    fun extractFieldNamesFromTemplate(fieldExtractor: Function<String, List<String>>): List<String> =
+    fun extractFieldNamesFromTemplate(fieldExtractor: Function<String, Set<String>>): Set<String> =
         fieldExtractor.apply(template)
 
     enum class TemplateType {

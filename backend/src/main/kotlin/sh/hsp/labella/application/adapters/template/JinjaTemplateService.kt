@@ -16,7 +16,7 @@ class JinjaTemplateService(val jinjava: Jinjava = Jinjava()) : TemplateService {
         }
     }
 
-    override fun listFields(templateContents: String): List<String> {
+    override fun listFields(templateContents: String): Set<String> {
         synchronized(this) {
             val list = mutableListOf<String>()
 
@@ -25,7 +25,7 @@ class JinjaTemplateService(val jinjava: Jinjava = Jinjava()) : TemplateService {
 
             jinjava.render(templateContents, null)
 
-            return list
+            return list.toSet()
         }
     }
 }
