@@ -16,7 +16,7 @@ export default function Image({id, fields}: { id: number, fields: Record<string,
 
 
   return images ?
-    <Carousel>{
+    <Carousel variant={"dark"}>{
       images.map(image =>
         <CarouselItem key={image}>
           <img style={{width: "100%"}} src={`data:image/jpeg;base64,${image}`}/>
