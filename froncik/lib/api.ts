@@ -89,6 +89,11 @@ const API = {
     previewSrc(id: number) {
       return `${API_PATH}/templates/${id}/preview`;
     },
+    fetchImage(url: string) {
+      return myFetch(url)
+        .then(response => response.blob())
+        .then(blob => URL.createObjectURL(blob))
+    },
 
     download(id: number) {
       return `${API_PATH}/templates/${id}/templated/download`

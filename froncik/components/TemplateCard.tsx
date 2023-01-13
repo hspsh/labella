@@ -4,13 +4,14 @@ import {Card, Stack, Button, ButtonGroup, Dropdown} from "react-bootstrap";
 import routes from "../lib/routes";
 import Template from "../common/Template";
 import API from "../lib/api";
+import {LoadingImage} from "./LoadingImage";
 
 type Props = {
   template: Template;
   onDelete: (id: number) => void;
 };
 
-export default function TemplateCard({ template, onDelete }: Props) {
+export default function TemplateCard({template, onDelete}: Props) {
   const buttonStyle = {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -51,13 +52,7 @@ export default function TemplateCard({ template, onDelete }: Props) {
       </Card.Header>
       <Stack direction="horizontal">
         <div style={{display: "inline-table", width: "80%"}}>
-          <Card.Img
-            src={API.templates.previewSrc(template.id)}
-            alt="Card image"
-            style={
-              {"--bs-card-inner-border-radius": 0} as React.CSSProperties
-            }
-          />
+          <LoadingImage src={API.templates.previewSrc(template.id)}/>
         </div>
         <Stack>
           <ButtonGroup
