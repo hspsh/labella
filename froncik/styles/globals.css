@@ -5,3 +5,8 @@ html, body {
 body.loading, body.loading * {
   cursor: wait !important;
 }
+
+.sizePicker .dropdown-menu.show {
+  width: 100%;
+  text-align: right;
+}

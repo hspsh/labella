@@ -1,4 +1,4 @@
-import Template, {TemplateType} from "../common/Template";
+import Template, { TemplateType } from "../common/Template";
 
 const API_PATH = process.env.NEXT_PUBLIC_API_PATH || "/api";
 
@@ -96,8 +96,26 @@ const API = {
     },
 
     download(id: number) {
-      return `${API_PATH}/templates/${id}/templated/download`
-    }
+      return `${API_PATH}/templates/${id}/templated/download`;
+    },
+
+    readLabelSize(): Promise<{ width: number; height: number }> {
+      return myFetch(`${API_PATH}/configuration/size`).then((req) =>
+        req.json()
+      );
+    },
+    updateLabelSize(width: number, height: number) {
+      return myFetch(`${API_PATH}/configuration/size`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          width,
+          height,
+        }),
+      });
+    },
   },
   labels: {
     previewSrc(id: number, fields: Record<string, string>) {
@@ -108,7 +126,7 @@ const API = {
       return `${API_PATH}/templates/${id}/preview?${queryString}`;
     },
     previewImages(id: number, fields: Record<string, string>) {
-      const url = this.previewSrc(id, fields)
+      const url = this.previewSrc(id, fields);
 
       return myFetch(url, {
         method: "GET",
@@ -116,7 +134,7 @@ const API = {
           "Content-Type": "application/json",
         },
       });
-    }
+    },
   },
 };
 
