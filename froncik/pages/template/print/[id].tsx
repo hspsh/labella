@@ -20,15 +20,11 @@ export default function Print({}: Props) {
   const [attributes, setAttributes] = useState<string[]>([]);
   const [fields, setFields] = useState({});
 
-  const updatePreview = useCallback(
-    debounce((id: number, fields: Record<string, string>) => {
-      setFields(fields)
-    }, debounceDelay),
-    []
-  );
+  const updatePreview =
+    (fields: Record<string, string>)=>setFields(fields)
 
   const formChangeHandler = (fields: Record<string, string>) => {
-    updatePreview(id, fields);
+    updatePreview(fields);
   };
 
   useEffect(() => {

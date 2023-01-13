@@ -1,6 +1,6 @@
 import {Container, Row, Col, Card} from "react-bootstrap";
 import React from "react";
-import Image from "./Image"
+import Images from "./Images"
 
 type Props = {
   form: React.ReactNode;
@@ -24,7 +24,7 @@ export default function FormWithPreview({form, id, fields}: Props) {
             className="mb-2"
           >
             <Card.Header>Podgląd</Card.Header>
-            <Image id={id} fields={fields}></Image>
+            <Images id={id} fields={fields}></Images>
           </Card>
         </Col>
       </Row>
