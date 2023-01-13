@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import Template, { TemplateType } from "../common/Template";
 import API from "../lib/api";
+import { toastAlert } from "./Toaster";
 
 const PRINTING_MINIMAL_TIMEOUT = 1000;
 
@@ -79,7 +80,8 @@ export default function TemplatesStore({ children }: Props) {
           const tpl = await API.templates.create(name, content, type);
           setState((s) => ({ ...s, templates: [...state.templates, tpl] }));
         } catch (e) {
-          alert("nie pykło dodawanie szablonu");
+          toastAlert("Nie pykło dodawanie szablonu");
+
           console.log(e);
         }
       });
@@ -91,7 +93,7 @@ export default function TemplatesStore({ children }: Props) {
           const newTemplates = state.templates.filter((t) => t.id != id);
           setState((s) => ({ ...s, templates: newTemplates }));
         } catch (e) {
-          alert("nie pykło usuwanie szablonu");
+          toastAlert("Nie pykło usuwanie szablonu");
           console.log(e);
         }
       });
@@ -102,7 +104,7 @@ export default function TemplatesStore({ children }: Props) {
           const tpl = await API.templates.update(id, name, content, type);
           setState((s) => ({ ...s, templates: [...state.templates, tpl] }));
         } catch (e) {
-          alert("nie pykło aktualizowanie szablonu");
+          toastAlert("Nie pykło aktualizowanie szablonu");
           console.log(e);
         }
       });
@@ -113,7 +115,7 @@ export default function TemplatesStore({ children }: Props) {
           const templates = await API.templates.list();
           setState((s) => ({ ...s, templates: templates }));
         } catch (e) {
-          alert("nie pykło pobieranie szablonów");
+          toastAlert("Nie pykło pobieranie szablonów");
           console.log(e);
         }
       });
@@ -127,7 +129,7 @@ export default function TemplatesStore({ children }: Props) {
           ]);
         });
       } catch (e) {
-        alert("nie pykło drukowanie :/");
+        toastAlert("Nie pykło drukowanie :/");
         console.log(e);
       }
     },

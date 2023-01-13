@@ -5,6 +5,7 @@ import debounce from "lodash/debounce";
 import TemplatePrintForm from "../../../components/TemplatePrintForm";
 import FormWithPreview from "../../../components/FormWithPreview";
 import API from "../../../lib/api";
+import { toastAlert } from "../../../components/Toaster";
 
 type QueryParams = {
   id: string;
@@ -33,9 +34,15 @@ export default function Print({}: Props) {
   useEffect(() => {
     if (!id) return;
 
-    API.templates.attributes(id).then((fields) => {
-      setAttributes(fields);
-    });
+    API.templates
+      .attributes(id)
+      .then((fields) => {
+        setAttributes(fields);
+      })
+      .catch((e) => {
+        toastAlert("Nie pykło pobieranie szczegółów szablonu");
+        console.log(e);
+      });
   }, [id]);
 
   const form = (
