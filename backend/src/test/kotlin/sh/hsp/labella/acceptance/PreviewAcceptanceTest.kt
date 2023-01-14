@@ -21,8 +21,6 @@ class PreviewAcceptanceTest {
     @Test
     fun whenTemplateIsAddedAndPreviewedThenSucceeds() {
         val template = createTemplate()
-//        val outputImage =
-//            ImageIO.read(DefaultResourceLoader().getResource("sh/hsp/labella/acceptance/320x224.png").inputStream)
 
         val templateResponse =
             rest.postForEntity("/api/templates", template, IdOnly::class.java, emptyMap<String, String>())
@@ -35,7 +33,6 @@ class PreviewAcceptanceTest {
                 BufferedImage::class.java
             )
         Assertions.assertEquals(HttpStatus.OK, printingResponse.statusCode)
-        // Assertions.assertTrue(outputImage.imageEqual(outputImage.body!!))
     }
 
     @Test
@@ -58,14 +55,16 @@ class PreviewAcceptanceTest {
         // Assertions.assertTrue(outputImage.imageEqual(outputImage.body!!))
     }
 
-    fun createTemplate(): Template {
-        val template = Template()
-        template.name = "Something"
-        template.type = Template.TemplateType.SVG
-        template.template =
-            DefaultResourceLoader().getResource("sh/hsp/labella/acceptance/320x224.svg").inputStream.bufferedReader()
-                .use(BufferedReader::readText)
-        return template
+    companion object {
+        fun createTemplate(): Template {
+            val template = Template()
+            template.name = "Something"
+            template.type = Template.TemplateType.SVG
+            template.template =
+                DefaultResourceLoader().getResource("sh/hsp/labella/acceptance/320x224.svg").inputStream.bufferedReader()
+                    .use(BufferedReader::readText)
+            return template
+        }
     }
 
     data class IdOnly(val id: Long);

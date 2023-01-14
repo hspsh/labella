@@ -1,11 +1,14 @@
 package sh.hsp.labella.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.springframework.validation.annotation.Validated
 import sh.hsp.labella.model.ports.*
 import java.awt.image.BufferedImage
 import java.util.*
 import java.util.function.Function
 import javax.persistence.*
+import javax.validation.Valid
+import javax.validation.constraints.Size
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -19,6 +22,7 @@ class Template {
     var id: Long? = null
 
     @Column(name = "name")
+    @Size(min = 3) // doesn't work
     var name: String? = null
 
     @Column(name = "type")
@@ -62,6 +66,18 @@ class Template {
 
     enum class TemplateType {
         SVG, MD
+    }
+
+    companion object {
+        fun create(name: String, type: Template.TemplateType, content: String) =
+            Template().apply {
+                this.name = name
+                this.type = type
+                this.template = content
+
+                this.updated = Date()
+                this.created = Date()
+            }
     }
 }
 
