@@ -31,7 +31,6 @@ class TemplateController(val templateRepository: SpringTemplateRepository) {
 }
 
 data class TemplateCreateDTO(
-    @field:Size(min = 3)
     val name: String,
 
     val type: Template.TemplateType,

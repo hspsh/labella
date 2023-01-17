@@ -3,7 +3,7 @@ html, body {
 }
 
 body.loading, body.loading * {
-  cursor: wait !important;
+  cursor: progress !important;
 }
 
 .sizePicker .dropdown-menu.show {

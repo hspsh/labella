@@ -1,6 +1,7 @@
 package sh.hsp.labella
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import sh.hsp.labella.application.adapters.label.LabelFittingRescaler
@@ -30,6 +31,7 @@ import sh.hsp.labella.model.RuntimeConfiguration
 import sh.hsp.labella.model.ports.*
 import sh.hsp.labella.peripherals.controllers.SpringTemplateRepository
 import sh.hsp.labella.peripherals.services.CachedPreviewingService
+import sh.hsp.labella.peripherals.services.EventedConfigurationService
 
 
 @Configuration
@@ -74,8 +76,13 @@ class BeanConfiguration {
 
     @Bean
     fun configurationService(
+        applicationEventPublisher: ApplicationEventPublisher,
         configuration: RuntimeConfiguration
-    ): ConfigurationService = ConfigurationServiceImpl(configuration)
+    ): ConfigurationService =
+        EventedConfigurationService(
+            applicationEventPublisher,
+            ConfigurationServiceImpl(configuration)
+        )
 
     @Bean
     fun templateService(): TemplateService {

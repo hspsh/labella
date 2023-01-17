@@ -9,14 +9,24 @@ export function LoadingImage({src}: { src: string }) {
   const [state, setState] = useState<undefined | string>(undefined)
 
   useEffect(() => {
-    context.withLoading(() =>
-      API.templates.fetchImage(src)
-        .then(url => setState(url))
+    state && URL.revokeObjectURL(state)
+  }, [src])
+
+  useEffect(() => {
+    context.withLoading(async () => {
+        return API.templates.fetchImage(src)
+          .then(url => setState(url))
+      }
     )
   }, [])
 
+  useEffect(() => () => {
+    state && URL.revokeObjectURL(state)
+  })
+
+
   return state == undefined ? <Spinner animation="border"/> : <Card.Img
-    src={src}
+    src={state}
     alt="Card image"
     style={
       {"--bs-card-inner-border-radius": 0} as React.CSSProperties

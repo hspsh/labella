@@ -13,8 +13,14 @@ class LabelFittingRescaler(private val sizeProvider: LabelSizeProvider) : LabelR
 
     override fun rescale(original: PrintDimensions): PrintDimensions {
         logger.info("Original size: ${original.xInPixels}x${original.yInPixel}")
+
         val labelSize = sizeProvider.provideLabelSize(original)
-        return original.rescale(labelSize)
+        logger.info("Size to fit: ${labelSize.xInPixels}x${labelSize.yInPixel}")
+
+        val rescaled = original.rescale(labelSize)
+        logger.info("Rescaled: ${rescaled.xInPixels}x${rescaled.yInPixel}")
+
+        return rescaled
     }
 
     private fun PrintDimensions.rescale(to: PrintDimensions): PrintDimensions {

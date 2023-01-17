@@ -1,4 +1,4 @@
-import Template, { TemplateType } from "../common/Template";
+import Template, {TemplateType} from "../common/Template";
 
 const API_PATH = process.env.NEXT_PUBLIC_API_PATH || "/api";
 
@@ -90,7 +90,7 @@ const API = {
       return `${API_PATH}/templates/${id}/preview`;
     },
     fetchImage(url: string) {
-      return myFetch(url)
+      return myFetch(url, {headers: {"Accept": "image/png"}})
         .then(response => response.blob())
         .then(blob => URL.createObjectURL(blob))
     },

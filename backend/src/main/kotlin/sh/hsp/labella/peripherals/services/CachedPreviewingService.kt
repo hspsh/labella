@@ -1,5 +1,6 @@
 package sh.hsp.labella.peripherals.services
 
+import org.springframework.context.ApplicationListener
 import org.springframework.data.rest.core.annotation.HandleAfterCreate
 import org.springframework.data.rest.core.annotation.HandleAfterSave
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler
@@ -9,7 +10,8 @@ import sh.hsp.labella.model.RenderedImage
 import sh.hsp.labella.model.Template
 
 @RepositoryEventHandler
-class CachedPreviewingService(val previewingService: PreviewingService) : PreviewingService {
+class CachedPreviewingService(val previewingService: PreviewingService) : PreviewingService,
+    ApplicationListener<ConfigurationUpdated> {
     val cache: ConcurrentLruCache<Long, ConcurrentLruCache<Map<String, String>, List<RenderedImage>>> =
         ConcurrentLruCache(100) { key ->
             ConcurrentLruCache(3) { fields ->
@@ -21,6 +23,10 @@ class CachedPreviewingService(val previewingService: PreviewingService) : Previe
         return cache.get(templateId).get(fields)
     }
 
+    override fun onApplicationEvent(event: ConfigurationUpdated) {
+        evokeAll()
+    }
+
     @HandleAfterCreate
     fun create(template: Template) {
         evoke(template)
@@ -30,4 +36,9 @@ class CachedPreviewingService(val previewingService: PreviewingService) : Previe
     fun evoke(template: Template) {
         cache.remove(template.id!!)
     }
+
+    private fun evokeAll() {
+        cache.clear()
+    }
 }
+
