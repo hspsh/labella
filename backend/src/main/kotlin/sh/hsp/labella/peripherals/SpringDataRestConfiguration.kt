@@ -1,6 +1,5 @@
 package sh.hsp.labella.peripherals
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener
@@ -34,7 +33,7 @@ class SpringDataRestConfiguration : RepositoryRestConfigurer {
                 errors.rejectValue("name", "name.too.short")
 
             DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                .runCatching { parse(template.template.byteInputStream())  }
+                .runCatching { parse(template.template.byteInputStream()) }
                 .onFailure {
                     errors.rejectValue("name", "incorrect.template")
                 }

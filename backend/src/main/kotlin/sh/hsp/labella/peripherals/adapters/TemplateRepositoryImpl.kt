@@ -3,6 +3,7 @@ package sh.hsp.labella.peripherals.adapters
 import org.springframework.stereotype.Component
 import sh.hsp.labella.application.ports.TemplateRepository
 import sh.hsp.labella.model.Template
+import sh.hsp.labella.peripherals.controllers.SpringTemplateRepository
 import kotlin.jvm.optionals.getOrNull
 
 @Component

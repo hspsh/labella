@@ -32,7 +32,7 @@ class Template {
     var template: String = ""
 
     @Column(name = "created")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(value = "created_at", access = JsonProperty.Access.READ_ONLY)
     var created: Date? = null
 
     @Column(name = "updated")

@@ -1,15 +1,11 @@
 package sh.hsp.labella.peripherals.controllers
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
+import org.springframework.web.bind.annotation.*
 import sh.hsp.labella.model.Template
-import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
-import javax.validation.Constraint
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
-import javax.validation.Payload
+import javax.validation.*
 import javax.validation.constraints.Size
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.reflect.KClass
@@ -18,23 +14,30 @@ import kotlin.reflect.KClass
 @RequestMapping(path = ["/api/new/templates"])
 class TemplateController(val templateRepository: SpringTemplateRepository) {
 
-//    @PostMapping
-//    fun create(@RequestBody templateCreateDTO: TemplateCreateDTO) {
-//        templateRepository.save(
-//            Template.create(tem)
-//        )
-//    }
+    @PostMapping
+    fun create(@Valid @RequestBody templateCreateDTO: TemplateCreateDTO) {
+        templateRepository.save(
+            Template.create(
+                templateCreateDTO.name,
+                templateCreateDTO.type,
+                templateCreateDTO.contents
+            )
+        )
+    }
 
+    @GetMapping
+    fun retrieve(@PageableDefault(size = 50) paging: Pageable, @PathVariable name: String) =
+        templateRepository.findAllByNameContaining(name, paging).toList()
 }
 
 data class TemplateCreateDTO(
-    @Size(min = 3)
+    @field:Size(min = 3)
     val name: String,
 
     val type: Template.TemplateType,
 
-    @ValidXml()
-    val template: Template
+    @field:ValidXml()
+    val contents: String
 );
 
 class SvgValidator : ConstraintValidator<ValidXml, String> {

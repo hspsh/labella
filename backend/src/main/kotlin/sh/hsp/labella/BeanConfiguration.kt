@@ -28,7 +28,7 @@ import sh.hsp.labella.application.services.templating.TemplatingServiceImpl
 import sh.hsp.labella.model.PrintDimensions
 import sh.hsp.labella.model.RuntimeConfiguration
 import sh.hsp.labella.model.ports.*
-import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
+import sh.hsp.labella.peripherals.controllers.SpringTemplateRepository
 import sh.hsp.labella.peripherals.services.CachedPreviewingService
 
 

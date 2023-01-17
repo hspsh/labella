@@ -5,7 +5,6 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sh.hsp.labella.application.services.templating.TemplatingService
-import sh.hsp.labella.peripherals.adapters.SpringTemplateRepository
 
 
 @RestController
