@@ -92,7 +92,6 @@ const API = {
     fetchImage(url: string) {
       return myFetch(url, {headers: {"Accept": "image/png"}})
         .then(response => response.blob())
-        .then(blob => URL.createObjectURL(blob))
     },
 
     download(id: number) {

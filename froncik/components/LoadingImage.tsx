@@ -15,6 +15,7 @@ export function LoadingImage({src}: { src: string }) {
   useEffect(() => {
     context.withLoading(async () => {
         return API.templates.fetchImage(src)
+          .then(blob => URL.createObjectURL(blob))
           .then(url => setState(url))
       }
     )
