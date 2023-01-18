@@ -2,9 +2,11 @@ package sh.hsp.labella.peripherals.controllers
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
 import sh.hsp.labella.model.Template
+import javax.transaction.Transactional
 import javax.validation.*
 import javax.validation.constraints.Size
 import javax.xml.parsers.DocumentBuilderFactory
@@ -15,7 +17,10 @@ import kotlin.reflect.KClass
 class TemplateController(val templateRepository: SpringTemplateRepository) {
 
     @PostMapping
-    fun create(@Valid @RequestBody templateCreateDTO: TemplateCreateDTO) {
+    @Transactional
+    fun create(
+        @Valid @RequestBody templateCreateDTO: TemplateCreateDTO
+    ) {
         templateRepository.save(
             Template.create(
                 templateCreateDTO.name,
@@ -26,8 +31,31 @@ class TemplateController(val templateRepository: SpringTemplateRepository) {
     }
 
     @GetMapping
-    fun retrieve(@PageableDefault(size = 50) paging: Pageable, @PathVariable name: String) =
+    fun retrieve(@PageableDefault(size = 50) paging: Pageable, @PathVariable name: String): List<Template> =
         templateRepository.findAllByNameContaining(name, paging).toList()
+
+    @PutMapping(path = ["/{id}"])
+    @Transactional
+    fun update(@PathVariable id: Long, @Valid @RequestBody templateCreateDTO: TemplateCreateDTO) {
+        templateRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException() }
+            .apply {
+                name = templateCreateDTO.name
+                type = templateCreateDTO.type
+                template = templateCreateDTO.contents
+            }.also {
+                templateRepository.save(it)
+            }
+    }
+
+    @DeleteMapping(path = ["/{id}"])
+    @Transactional
+    fun delete(@PathVariable id: Long) =
+        templateRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException() }
+            .also { templateRepository.delete(it) }
+
+
 }
 
 data class TemplateCreateDTO(
@@ -35,7 +63,7 @@ data class TemplateCreateDTO(
 
     val type: Template.TemplateType,
 
-    @field:ValidXml()
+    @field:ValidXml(message = "SVG file is invalid bruh")
     val contents: String
 );
 
