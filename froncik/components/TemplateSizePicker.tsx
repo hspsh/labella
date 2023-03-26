@@ -8,6 +8,7 @@ import API from "../lib/api";
 const possibilities = [
   { width: 465, height: 356 },
   { width: 320, height: 240 },
+  { width: 450, height: 108 },
 ];
 
 export default function TemplateSizePicker() {
