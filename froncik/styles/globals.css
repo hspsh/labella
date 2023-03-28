@@ -10,3 +10,17 @@ body.loading, body.loading * {
   width: 100%;
   text-align: right;
 }
+
+.preview-preloader {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.updating-images {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
