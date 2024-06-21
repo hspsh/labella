@@ -12,7 +12,6 @@ type QueryParams = {
 };
 
 type Props = {};
-const debounceDelay = 1000; //ms
 
 export default function Print({}: Props) {
   const router = useRouter();

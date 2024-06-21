@@ -4,7 +4,7 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import _ from "lodash";
 import {TemplatesContext} from "./teplatesStore";
 
-
+const debounceTime = 2000;
 export default function Images({id, fields}: { id: number, fields: Record<string, string> }) {
 
   const [images, loadImages] = useState<undefined | string[]>(undefined)
@@ -14,7 +14,7 @@ export default function Images({id, fields}: { id: number, fields: Record<string
   const debouncedQuery = useCallback(_.debounce((fun) =>
     ctx.withLoading(() =>
       fun()
-    ), 400
+    ), debounceTime
   ), [])
 
   useEffect(() => {
