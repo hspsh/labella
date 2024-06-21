@@ -17,7 +17,7 @@ const myFetch = (
 const API = {
   templates: {
     list(): Promise<Template[]> {
-      return myFetch(`${API_PATH}/templates`)
+      return myFetch(`${API_PATH}/templates?size=10000`)
         .then((req) => req.json())
         .then((data) => data._embedded.templates as Template[]);
     },

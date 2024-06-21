@@ -24,7 +24,7 @@ export default function FormWithPreview({form, id, fields}: Props) {
             className="mb-2"
           >
             <Card.Header>Podgląd</Card.Header>
-            <Images id={id} fields={fields}></Images>
+            <Images key={id} id={id} fields={fields}></Images>
           </Card>
         </Col>
       </Row>

@@ -12,7 +12,7 @@ type QueryParams = {
 };
 
 type Props = {};
-const debounceDelay = 400; //ms
+const debounceDelay = 1000; //ms
 
 export default function Print({}: Props) {
   const router = useRouter();
@@ -49,5 +49,5 @@ export default function Print({}: Props) {
     />
   );
 
-  return (!isNaN(id) && id) && <FormWithPreview form={form} id={id} fields={fields}/>;
+  return (!isNaN(id) && id) && <FormWithPreview key={id} form={form} id={id} fields={fields}/>;
 }
