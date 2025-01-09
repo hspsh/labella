@@ -42,6 +42,7 @@ jobs:
           path: backend/target/*.jar
 
   publish:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download JAR artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: app-jar
           path: .
