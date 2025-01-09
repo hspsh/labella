@@ -39,7 +39,7 @@ jobs:
         run: ./gettobuild.sh
 
       - name: Archive JAR file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: app-jar
           path: backend/target/*.jar
