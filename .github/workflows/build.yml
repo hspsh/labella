@@ -69,4 +69,4 @@ jobs:
             jar_file=$(ls *.jar)
             new_name="${version}.jar"
             mv "$jar_file" "$new_name"
-            gh release create "$version" "$new_name" --notes "Release $version"
+            gh release create "$version" "$new_name" --notes "Release: $version"
