@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - build-script
-  pull_request:
-    branches:
-      - master
 
 jobs:
   build:
