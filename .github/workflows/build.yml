@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - build-script
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
