@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 11
+
+      - name: Install Inkscape
+        run: sudo apt-get update && sudo apt-get install -y inkscape
+
+      - name: Ensure build script and mvnw are executable
+        run: |
+          chmod +x ./gettobuild.sh
+          chmod +x ./backend/mvnw
+
+      - name: Run build script
+        run: ./gettobuild.sh
+
+      - name: Archive JAR file
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-jar
+          path: backend/target/*.jar
