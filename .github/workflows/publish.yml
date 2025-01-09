@@ -1,0 +1,29 @@
+name: Publish
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: .
+
+      - name: Publish JAR file
+        run: |
+          version=${GITHUB_REF#refs/tags/}
+          jar_file=$(ls *.jar)
+          new_name="${version}.jar"
+          mv "$jar_file" "$new_name"
+          gh release create "$version" "$new_name" --notes "Release $version"
