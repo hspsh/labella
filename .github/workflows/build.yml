@@ -57,10 +57,10 @@ jobs:
           name: app-jar
           path: .
 
-          - name: Publish JAR file
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
+      - name: Publish JAR file
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
             if [[ "$GITHUB_REF" == refs/tags/* ]]; then
               version=${GITHUB_REF#refs/tags/}
             else
