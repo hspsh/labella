@@ -58,6 +58,8 @@ jobs:
           path: .
 
       - name: Publish JAR file
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=${GITHUB_REF#refs/tags/}
           jar_file=$(ls *.jar)
