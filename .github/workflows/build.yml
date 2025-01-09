@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - build-script
   pull_request:
     branches:
       - master
