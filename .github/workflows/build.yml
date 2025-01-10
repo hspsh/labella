@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - build-script
+      - master
     tags:
       - 'v*.*.*'
 
