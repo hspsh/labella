@@ -3,9 +3,12 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - build-script
     tags:
       - 'v*.*.*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -66,7 +69,9 @@ jobs:
             else
               version=${GITHUB_REF#refs/heads/}
             fi
+            branch=$(echo ${GITHUB_REF#refs/heads/} | tr '/' '-')
+            commit_hash=$(git rev-parse --short HEAD)
             jar_file=$(ls *.jar)
-            new_name="${version}.jar"
+            new_name="${version}-${branch}-${commit_hash}.jar"
             mv "$jar_file" "$new_name"
             gh release create "$version" "$new_name" --notes "Release: $version"
