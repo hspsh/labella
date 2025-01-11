@@ -2,8 +2,6 @@ name: Build
 
 on:
   push:
-    branches:
-      - build-script
     tags:
       - 'v*.*.*'
 
@@ -61,15 +59,9 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            version=${GITHUB_REF#refs/tags/}
-            branch="release"
-          else
-            version=${GITHUB_REF#refs/heads/}
-            branch=$(echo ${GITHUB_REF#refs/heads/} | tr '/' '-')
-          fi
+          version=${GITHUB_REF#refs/tags/}
           commit_hash=$(git rev-parse --short HEAD)
           jar_file=$(ls *.jar)
-          new_name="${version}-${branch}-${commit_hash}.jar"
+          new_name="${version}-${commit_hash}.jar"
           mv "$jar_file" "$new_name"
           gh release create "$version" "$new_name" --notes "Release: $version"
