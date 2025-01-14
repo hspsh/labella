@@ -65,6 +65,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "GITHUB_REF is $GITHUB_REF"
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             version=${GITHUB_REF#refs/tags/}
             new_name="${version}.jar"
@@ -87,6 +88,8 @@ jobs:
             echo "This workflow only works on tags, the master branch, and the build-script branch."
             exit 1
           fi
+          echo "New version is $version"
+          echo "New JAR name is $new_name"
           jar_file=$(ls *.jar)
           mv "$jar_file" "$new_name"
           gh release create "$version" "$new_name" --notes "Release: $version"
