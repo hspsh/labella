@@ -1,0 +1,103 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+    branches:
+      - master
+      - build-script
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 11
+
+       - name: Install Inkscape
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://media.inkscape.org/dl/resources/file/inkscape-1.2.1_2022-07-14_amd64.deb
+          sudo apt-get install -y ./inkscape-1.2.1_2022-07-14_amd64.deb
+
+
+      - name: Ensure build script and mvnw are executable
+        run: |
+          chmod +x ./gettobuild.sh
+          chmod +x ./backend/mvnw
+
+      - name: Run build script
+        run: ./gettobuild.sh
+
+      - name: Archive JAR file
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: backend/target/*.jar
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: .
+
+      - name: Publish JAR file
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "GITHUB_REF is $GITHUB_REF"
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            version=${GITHUB_REF#refs/tags/}
+            new_name="${version}.jar"
+          elif [[ "$GITHUB_REF" == refs/heads/master || "$GITHUB_REF" == refs/heads/build-script ]]; then
+            # Check if there are any tags
+            if git describe --tags $(git rev-list --tags --max-count=1) >/dev/null 2>&1; then
+              # Get the latest tag and increment the patch version
+              latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+              if [[ $latest_tag =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+                major=${BASH_REMATCH[1]}
+                minor=${BASH_REMATCH[2]}
+                patch=${BASH_REMATCH[3]}
+                new_patch=$((patch + 1))
+                version="${major}.${minor}.${new_patch}"
+              else
+                echo "No valid tag found to increment the version."
+                exit 1
+              fi
+            else
+              echo "No tags found in the repository."
+              exit 1
+            fi
+            commit_hash=$(git rev-parse --short HEAD)
+            new_name="${version}-${commit_hash}.jar"
+          else
+            echo "This workflow only works on tags, the master branch, and the build-script branch."
+            exit 1
+          fi
+          echo "New version is $version"
+          echo "New JAR name is $new_name"
+          jar_file=$(ls *.jar)
+          mv "$jar_file" "$new_name"
+          gh release create "$version" "$new_name" --notes "Release: $version"
