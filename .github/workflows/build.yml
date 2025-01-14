@@ -67,12 +67,12 @@ jobs:
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             version=${GITHUB_REF#refs/tags/}
             new_name="${version}.jar"
-          elif [[ "$GITHUB_REF" == refs/heads/master ]]; then
+          elif [[ "$GITHUB_REF" == refs/heads/build-script ]]; then
             version=${GITHUB_REF#refs/heads/}
             commit_hash=$(git rev-parse --short HEAD)
             new_name="${version}-${commit_hash}.jar"
           else
-            echo "This workflow only works on tags and the master branch."
+            echo "This workflow only works on tags and the build-script branch."
             exit 1
           fi
           jar_file=$(ls *.jar)
