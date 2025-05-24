@@ -9,6 +9,12 @@ const possibilities = [
   { width: 465, height: 356 },
   { width: 320, height: 240 },
   { width: 450, height: 108 },
+  { width: 464, height: 640 },
+  { width: 456, height: 336 },
+  { width: 256, height: 160 },
+  { width: 400, height: 120 },
+  { width: 240, height: 96 },
+  { width: 160, height: 80 },
 ];
 
 function entryText(size) {
