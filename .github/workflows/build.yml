@@ -28,10 +28,9 @@ jobs:
 
       - name: Install Inkscape
         run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://media.inkscape.org/dl/resources/file/inkscape-1.2.1_2022-07-14_amd64.deb
-          sudo apt-get install -y ./inkscape-1.2.1_2022-07-14_amd64.deb
+          sudo add-apt-repository ppa:inkscape.dev/stable
+          sudo apt update
+          sudo apt install -y inkscape
 
 
       - name: Ensure build script and mvnw are executable
