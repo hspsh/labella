@@ -17,7 +17,7 @@ const possibilities = [
   { width: 160, height: 80 },
 ];
 
-function entryText(size) {
+function entryText(size: { width: number; height: number }) {
   const ppmm=8.0;
   return `${size.width/ppmm} x ${size.height/ppmm} [mm] (${size.width} x ${size.height} [points])`;
 }
