@@ -42,7 +42,7 @@ export default function TemplateSizePicker() {
               API.templates.updateLabelSize(s.width, s.height);
             }}
           >
-            entryText(s)
+            {entryText(s)}
           </NavDropdown.Item>
         );
       })}
