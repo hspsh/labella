@@ -11,6 +11,11 @@ const possibilities = [
   { width: 450, height: 108 },
 ];
 
+function entryText(size) {
+  const ppmm=8.0;
+  return `${size.width/ppmm} x ${size.height/ppmm} [mm] (${size.width} x ${size.height} [points])`;
+}
+
 export default function TemplateSizePicker() {
   const [size, setSize] = useState({ width: 0, height: 0 });
 
@@ -31,7 +36,7 @@ export default function TemplateSizePicker() {
               API.templates.updateLabelSize(s.width, s.height);
             }}
           >
-            {s.width} x {s.height}
+            entryText(s)
           </NavDropdown.Item>
         );
       })}
