@@ -24,3 +24,8 @@ body.loading, body.loading * {
   -ms-filter: blur(2px);
   filter: blur(2px);
 }
+
+.dropdown-menu.show {
+  width: max-content !important;
+  text-align: start !important;
+}
